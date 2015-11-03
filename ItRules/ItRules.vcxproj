@@ -19,22 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Action.h" />
     <ClInclude Include="Condition.h" />
-    <ClInclude Include="Function.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
     <ClInclude Include="LexicalTokenizer.h" />
+    <ClInclude Include="Literal.h" />
+    <ClInclude Include="Mark.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleList.h" />
+    <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Condition.cpp" />
-    <ClCompile Include="Function.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
     <ClCompile Include="LexicalTokenizer.cpp" />
-    <ClCompile Include="Action.cpp" />
+    <ClCompile Include="Literal.cpp" />
+    <ClCompile Include="Mark.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleList.cpp" />
+    <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C072D8E6-63BF-4444-A6AE-98D489DFBDB1}</ProjectGuid>

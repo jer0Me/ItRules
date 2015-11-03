@@ -1,9 +1,15 @@
 ﻿#pragma once
 #include "Condition.h"
-#include "Action.h"
+#include "Mark.h"
+#include "Literal.h"
+#include <boost/variant/variant.hpp>
+#include "Expression.h"
 
 struct Rule
 {
-	Condition condition;
-	Action action;
+	typedef boost::variant<Mark, Literal> tokenVariant;
+
+	std::vector<Condition> conditions;	
+	std::vector<tokenVariant> tokens;
+	
 };
