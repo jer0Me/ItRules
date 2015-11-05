@@ -1,128 +1,96 @@
 #include "gtest/gtest.h"
 #include "LexicalAnalyzer.h"
-#include <string>
+#include <boost/variant/get.hpp>
 
 TEST(LexicalAnalyzer, testSimpleRule)
 {
 	std::string const rules = "def type(name)\nbody\nend";
 	LexicalAnalyzer analyzer;
 	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("type", ruleList.rules[0].condition.functionList[0].type);
-	ASSERT_EQ("name", ruleList.rules[0].condition.functionList[0].value);
+	ASSERT_EQ("type", ruleList.rules[0].conditions[0].name);
+	ASSERT_EQ("name", ruleList.rules[0].conditions[0].parameter);
+	ASSERT_FALSE(ruleList.rules[0].conditions[0].negated);
 }
-TEST(LexicalAnalyzer, testRuleWithTwoFunctions)
+
+TEST(LexicalAnalyzer, testRuleWithMarksAndOptions)
 {
-	std::string const rules = "def type(name) trigger(mark)\nbody\nend";
+	std::string const rule = "def type(person)\n$Name was born in $Country+Capitalize in $Birthday+Year\nend";
+	LexicalAnalyzer analyzer;
+	RuleList ruleList = analyzer.analyze(rule);
+	ASSERT_EQ("type", ruleList.rules[0].conditions[0].name);
+	ASSERT_EQ("person", ruleList.rules[0].conditions[0].parameter);
+	ASSERT_EQ("Name", boost::get<Mark>(ruleList.rules[0].tokens[0]).name);
+	ASSERT_EQ(" was born in ", boost::get<Literal>(ruleList.rules[0].tokens[1]).text);
+	ASSERT_EQ("Country", boost::get<Mark>(ruleList.rules[0].tokens[2]).name);
+	ASSERT_EQ("Capitalize", boost::get<Mark>(ruleList.rules[0].tokens[2]).options[0]);
+	ASSERT_EQ(" in ", boost::get<Literal>(ruleList.rules[0].tokens[3]).text);
+	ASSERT_EQ("Birthday", boost::get<Mark>(ruleList.rules[0].tokens[4]).name);
+	ASSERT_EQ("Year", boost::get<Mark>(ruleList.rules[0].tokens[4]).options[0]);
+}
+
+ TEST(LexicalAnalyzer, testRuleWithEscapedCharacter)
+{
+	std::string const rule = "def type(Person)\n\tName: $Name+Uppercase\n\tBirthYear:"
+		" $Birthday+Year\n\n\tHeight: $Height ($Height+Letters) "
+		"cm\n\tSalary: $$$Salary+Separators\nend";
+	LexicalAnalyzer analyzer;
+	RuleList ruleList = analyzer.analyze(rule);
+	ASSERT_EQ("type", ruleList.rules[0].conditions[0].name);
+	ASSERT_EQ("Person", ruleList.rules[0].conditions[0].parameter);
+	ASSERT_EQ("Name: ", boost::get<Literal>(ruleList.rules[0].tokens[0]).text);
+	ASSERT_EQ("Name", boost::get<Mark>(ruleList.rules[0].tokens[1]).name);
+	ASSERT_EQ("Uppercase", boost::get<Mark>(ruleList.rules[0].tokens[1]).options[0]);
+	ASSERT_EQ("\nBirthYear: ", boost::get<Literal>(ruleList.rules[0].tokens[2]).text);
+	ASSERT_EQ("Birthday", boost::get<Mark>(ruleList.rules[0].tokens[3]).name);
+	ASSERT_EQ("Year", boost::get<Mark>(ruleList.rules[0].tokens[3]).options[0]);
+	ASSERT_EQ("\n\nHeight: ", boost::get<Literal>(ruleList.rules[0].tokens[4]).text);
+	ASSERT_EQ("Height", boost::get<Mark>(ruleList.rules[0].tokens[5]).name);
+	ASSERT_EQ(" (", boost::get<Literal>(ruleList.rules[0].tokens[6]).text);
+	ASSERT_EQ("Height", boost::get<Mark>(ruleList.rules[0].tokens[7]).name);
+	ASSERT_EQ("Letters", boost::get<Mark>(ruleList.rules[0].tokens[7]).options[0]);
+	ASSERT_EQ(") cm\nSalary: $", boost::get<Literal>(ruleList.rules[0].tokens[8]).text);
+	ASSERT_EQ("Salary", boost::get<Mark>(ruleList.rules[0].tokens[9]).name);
+	ASSERT_EQ("Separators", boost::get<Mark>(ruleList.rules[0].tokens[9]).options[0]);
+}
+ 
+TEST(LexicalAnalyzer, testRuleWithMarkSeparator)
+{
+	std::string const rule = "def type(Person)\n\t$Name has $PetsCount+Letters pets:\n\t"
+		"  * $Pets...[$NL]\nend";
+	LexicalAnalyzer analyzer;
+	RuleList ruleList = analyzer.analyze(rule);
+	ASSERT_EQ("type", ruleList.rules[0].conditions[0].name);
+	ASSERT_EQ("Person", ruleList.rules[0].conditions[0].parameter);
+	ASSERT_EQ("Name", boost::get<Mark>(ruleList.rules[0].tokens[0]).name);
+	ASSERT_EQ(" has ", boost::get<Literal>(ruleList.rules[0].tokens[1]).text);
+	ASSERT_EQ("PetsCount", boost::get<Mark>(ruleList.rules[0].tokens[2]).name);
+	ASSERT_EQ("Letters", boost::get<Mark>(ruleList.rules[0].tokens[2]).options[0]);
+	ASSERT_EQ(" pets:\n  * ", boost::get<Literal>(ruleList.rules[0].tokens[3]).text);
+	ASSERT_EQ("Pets...", boost::get<Mark>(ruleList.rules[0].tokens[4]).name);
+	ASSERT_EQ("\n", boost::get<Mark>(ruleList.rules[0].tokens[4]).separator);
+}
+
+TEST(LexicalAnalyzer, testRuleWithExpression)
+{
+	std::string const rule = "def type(Module)\n\t<module name=\"$name\">[\n\t$modules...[$NL]\n\t]</module>\nend";
+	LexicalAnalyzer analyzer;
+	RuleList ruleList = analyzer.analyze(rule);
+	ASSERT_EQ("type", ruleList.rules[0].conditions[0].name);
+	ASSERT_EQ("Module", ruleList.rules[0].conditions[0].parameter);
+	ASSERT_EQ("<module name=\"", boost::get<Literal>(ruleList.rules[0].tokens[0]).text);
+	ASSERT_EQ("name", boost::get<Mark>(ruleList.rules[0].tokens[1]).name);
+	ASSERT_EQ("\">", boost::get<Literal>(ruleList.rules[0].tokens[2]).text);
+	ASSERT_EQ("\n", boost::get<Literal>(boost::get<Expression>(ruleList.rules[0].tokens[3]).tokens[0]).text);	
+	ASSERT_EQ("\t", boost::get<Literal>(boost::get<Expression>(ruleList.rules[0].tokens[3]).tokens[1]).text);
+
+}
+
+TEST(LexicalAnalyzer, testConditionNegated)
+{
+	std::string const rules = "def type(!name)\nbody\nend";
 	LexicalAnalyzer analyzer;
 	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("type", ruleList.rules[0].condition.functionList[0].type);
-	ASSERT_EQ("name", ruleList.rules[0].condition.functionList[0].value);
-	ASSERT_EQ("trigger", ruleList.rules[0].condition.functionList[1].type);
-	ASSERT_EQ("mark", ruleList.rules[0].condition.functionList[1].value);
+	ASSERT_EQ("type", ruleList.rules[0].conditions[0].name);
+	ASSERT_EQ("name", ruleList.rules[0].conditions[0].parameter);
+	ASSERT_TRUE(ruleList.rules[0].conditions[0].negated);
 }
-
-TEST(LexicalAnalyzer, testRuleWithFunctionWithoutArgument)
-{
-	std::string const rules = "def one()trigger(object)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("one", ruleList.rules[0].condition.functionList[0].type);
-	ASSERT_EQ("", ruleList.rules[0].condition.functionList[0].value);
-	ASSERT_EQ("trigger", ruleList.rules[0].condition.functionList[1].type);
-	ASSERT_EQ("object", ruleList.rules[0].condition.functionList[1].value);
-}
-
-TEST(LexicalAnalyzer, testRuleWithThreeFunctionAndOneOfThemWithoutArgument)
-{
-	std::string const rules = "def type(Person) one() trigger(object)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(3, ruleList.rules[0].condition.functionList.size());
-}
-
-TEST(LexicalAnalyzer, testRuleWithThreeFunctionOneOfThemWithoutArgumentAndWithoutSpaceBetweenThem)
-{
-	std::string const rules = "def type(Person)one()trigger(object)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(3, ruleList.rules[0].condition.functionList.size());
-}
-
-TEST(LexicalAnalyzer, testRuleWithSimpleBody)
-{
-	std::string const rules = "def type(Person)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("body", ruleList.rules[0].action.body);
-}
-
-TEST(LexicalAnalyzer, testRuleWithBodyWithSpacesBetweenCharacter)
-{
-	std::string const rules = "def type(Person)\nbody with spaces\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("body with spaces", ruleList.rules[0].action.body);
-}
-
-TEST(LexicalAnalyzer, testRuleWithNewLinesInBodyCondition)
-{
-	std::string const rules = "def type(Person)\nbody with\n spaces\n end";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("body with\n spaces", ruleList.rules[0].action.body);
-}
-TEST(LexicalAnalyzer, testRuleWithMultipleNewLinesInBodyCondition)
-{
-	std::string const rules = "def type(Person)\n\nbody with\n \n spaces\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ("\nbody with\n \n spaces", ruleList.rules[0].action.body);
-}
-
-TEST(LexicalAnalyzer, testRuleWithDefKeywordBadSpelled)
-{
-	std::string const rules = "defs type(Person)one()trigger(object)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(0, ruleList.size());
-}
-
-TEST(LexicalAnalyzer, testRuleBadDefined)
-{
-	std::string const rules = "def t y p e(Person) one()trigger(object)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(0, ruleList.size());
-}
-
-TEST(LexicalAnalyzer, testRuleWithFunctionBadDefined)
-{
-	std::string const rules = "deftype(\nPerson)one()trigger(object)\nbody\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(0, ruleList.size());
-}
-
-TEST(LexicalAnalyzer, testMultipleRules)
-{
-	std::string const rules = "def type(Person)\n\n(body) with\n \n spaces\nend\n\n\ndef type(Person)\n\nbody with\n \n spaces\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(2, ruleList.size());
-}
-
-TEST(LexicalAnalyzer, testMultipleRulesWithOneOfThemBadDefined)
-{
-	std::string const rules = "def type(Person)\n\n(body) with\n \n spaces\nend\ndef ty pe(Person)\n\nbody with\n \n spaces\nend";
-	LexicalAnalyzer analyzer;
-	RuleList ruleList = analyzer.analyze(rules);
-	ASSERT_EQ(0, ruleList.size());
-}
-
-TEST(LexicalAnalyzer, testMarkWithFormat)
-{
-	std::string const rules = "def type(Attribute) trigger(attribute+Const) type(Const)\n"
-								"\tpublic static final $name+UPPERCASE;\nend";
-}
-
-

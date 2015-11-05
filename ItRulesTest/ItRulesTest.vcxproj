@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Jerome\Documents\Visual Studio 2015\gtest;C:\Users\Jerome\Documents\Visual Studio 2015\gtest\include;C:\Users\Jerome\Documents\Visual Studio 2015\Projects\ItRules\ItRules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost;C:\Users\Jerome\Documents\Visual Studio 2015\gtest;C:\Users\Jerome\Documents\Visual Studio 2015\gtest\include;C:\Users\Jerome\Documents\Visual Studio 2015\Projects\ItRules\ItRules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
