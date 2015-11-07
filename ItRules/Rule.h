@@ -1,15 +1,17 @@
 ﻿#pragma once
 #include "Condition.h"
-#include "Mark.h"
-#include "Literal.h"
-#include "Expression.h"
-#include <boost/variant/variant.hpp>
+#include "Token.h"
+#include <list>
 
-struct Rule
+class Rule
 {
-	typedef boost::variant<Mark, Literal, Expression> tokenVariant;
+	std::list<Condition> conditions;	
+	std::list<Token*> tokens;
 
-	std::vector<Condition> conditions;	
-	std::vector<tokenVariant> tokens;
-	
+public:
+	void setRule(std::list<Condition> conditions, std::list<Token*> tokens);
+
+	std::list<Condition>::iterator get_conditions_iterator();
+
+	std::list<Token*>::iterator get_token_iterator();
 };

@@ -2,7 +2,11 @@
 #include <string>
 #include "Token.h"
 
-struct Literal : public Token
+class Literal : public Token
 {
 	std::string text;
+
+public:
+	Literal(std::string text);
+	std::string getText();
 };

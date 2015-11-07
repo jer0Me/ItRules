@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include "Rule.h"
-#include <vector>
+#include <list>
 
-struct RuleList
+class RuleList
 {
-	std::vector<Rule> rules;
-	const int size();
+	std::list<Rule> rules;
+
+private:
+	RuleList(std::list<Rule> rules);
+	std::list<Rule>::iterator getRules();
 };

@@ -1,6 +1,8 @@
 #include "RuleList.h"
 
-const int RuleList::size()
+RuleList::RuleList(std::list<Rule> rules) : rules(rules){}
+
+std::list<Rule>::iterator RuleList::getRules()
 {
-	return rules.size();
+	return rules.begin();
 }

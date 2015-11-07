@@ -73,7 +73,8 @@
     <IncludePath>C:\Users\Jerome\Documents\Visual Studio 2015\gtest;C:\Users\Jerome\Documents\Visual Studio 2015\gtest\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>C:\Users\Jerome\Documents\Visual Studio 2015\gtest\include;C:\Users\Jerome\Documents\Visual Studio 2015\gtest;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Jerome\Documents\Visual Studio 2015\gtest\include;C:\Users\Jerome\Documents\Visual Studio 2015\gtest;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
