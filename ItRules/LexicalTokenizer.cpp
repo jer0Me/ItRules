@@ -1,6 +1,7 @@
 ﻿#define BOOST_SPIRIT_DEBUG
 #include "LexicalTokenizer.h"
 #include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/qi.hpp>
 #include "Literal.h"
 #include "Mark.h"
 #include "Expression.h"
@@ -37,7 +38,7 @@ void LexicalTokenizer::setConditionDefinition()
 {	
 	conditionType %= +alnum;
 	conditionParameter %= lexeme['(' >> *alnum >> ')'];
-	condition = (conditionType >> conditionParameter)[boost::phoenix::bind(&Condition::setCondition, _val, _1, _2)];
+	condition = (conditionType >> conditionParameter)[_val = new_<Condition>(_1, _2, false)];
 	conditions = +(condition)[push_back(_val, _1)];
 }
 
@@ -80,6 +81,6 @@ void LexicalTokenizer::setTokensDefinition()
 
 void LexicalTokenizer::setRulesDefinition()
 {
-	rule = (lit("def") >> conditions >> eol >> tokens >> eol >> lit("end"))[boost::phoenix::bind(&Rule::setRule, _val, _1, _2)];
+	rule = (lit("def") >> conditions >> eol >> tokens >> eol >> lit("end"))[_val = new_<Rule>(_1, _2)];
 	start = *(rule[push_back(_val, _1)] % +eol);
 }

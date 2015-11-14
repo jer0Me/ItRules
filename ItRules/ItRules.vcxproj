@@ -19,26 +19,70 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractFrame.h" />
+    <ClInclude Include="AbstractMark.h" />
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="CompositeMark.h" />
     <ClInclude Include="Condition.h" />
+    <ClInclude Include="DateFormatter.h" />
+    <ClInclude Include="DelegateMark.h" />
     <ClInclude Include="Expression.h" />
+    <ClInclude Include="Formatter.h" />
+    <ClInclude Include="FormatterStore.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="Function.h" />
+    <ClInclude Include="FunctionStore.h" />
+    <ClInclude Include="ItRules.h" />
+    <ClInclude Include="NonFormattingMark.h" />
+    <ClInclude Include="SlotFunction.h" />
+    <ClInclude Include="SlotMap.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
     <ClInclude Include="LexicalTokenizer.h" />
     <ClInclude Include="Literal.h" />
     <ClInclude Include="Mark.h" />
+    <ClInclude Include="PrimitiveFrame.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleList.h" />
+    <ClInclude Include="StringFormatter.h" />
+    <ClInclude Include="TemplateEngine.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="Trigger.h" />
+    <ClInclude Include="TypeFunction.h" />
+    <ClInclude Include="TypeSet.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractFrame.cpp" />
+    <ClCompile Include="AbstractMark.cpp" />
+    <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="CompositeMark.cpp" />
     <ClCompile Include="Condition.cpp" />
+    <ClCompile Include="DateFormatter.cpp" />
+    <ClCompile Include="DelegateMark.cpp" />
     <ClCompile Include="Expression.cpp" />
+    <ClCompile Include="Formatter.cpp" />
+    <ClCompile Include="FormatterStore.cpp" />
+    <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="Function.cpp" />
+    <ClCompile Include="FunctionStore.cpp" />
+    <ClCompile Include="NonFormattingMark.cpp" />
+    <ClCompile Include="SlotFunction.cpp" />
+    <ClCompile Include="SlotMap.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
     <ClCompile Include="LexicalTokenizer.cpp" />
     <ClCompile Include="Literal.cpp" />
     <ClCompile Include="Mark.cpp" />
+    <ClCompile Include="PrimitiveFrame.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="RuleList.cpp" />
+    <ClCompile Include="StringFormatter.cpp" />
+    <ClCompile Include="TemplateEngine.cpp" />
     <ClCompile Include="Token.cpp" />
+    <ClCompile Include="Trigger.cpp" />
+    <ClCompile Include="TypeFunction.cpp" />
+    <ClCompile Include="TypeSet.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C072D8E6-63BF-4444-A6AE-98D489DFBDB1}</ProjectGuid>

@@ -5,13 +5,22 @@
 
 class Rule
 {
-	std::list<Condition> conditions;	
+	std::list<Condition*> conditions;	
 	std::list<Token*> tokens;
+	bool initiated = false;
 
 public:
-	void setRule(std::list<Condition> conditions, std::list<Token*> tokens);
 
-	std::list<Condition>::iterator get_conditions_iterator();
+	Rule(std::list<Condition*> conditions, std::list<Token*> tokens);
 
-	std::list<Token*>::iterator get_token_iterator();
+	void set_rule(std::list<Condition*> conditions, std::list<Token*> tokens);
+
+	bool operator<(const Rule &rule) const;
+
+	std::list<Condition*>& get_conditions();
+
+	bool is_initiated() const;
+
+	std::list<Token*> get_tokens();
+
 };

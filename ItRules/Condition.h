@@ -8,9 +8,9 @@ class Condition
 	bool negated;
 
 public:
-	void setCondition(std::string name, std::string parameter);
+	Condition(std::string name, std::string parameter, bool negated);
 
-	std::string getName();
+	std::string get_name();
 	std::string getParameter();
 	
 	bool isNegated();

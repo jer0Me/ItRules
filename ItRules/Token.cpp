@@ -2,7 +2,17 @@
 
 Token::~Token(){}
 
-void Token::setPrevious(Token* previous)
+void Token::set_previous(Token* previous)
 {
 	this->previous = previous;
+}
+
+Token* Token::get_previous()
+{
+	return this->previous;
+}
+
+std::string Token::to_string()
+{
+	return "";
 }

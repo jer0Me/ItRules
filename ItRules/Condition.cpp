@@ -1,13 +1,9 @@
 #include "Condition.h"
 
-void Condition::setCondition(std::string name, std::string parameter)
-{
-	this->name = name;
-	this->parameter = parameter;
-}
+Condition::Condition(std::string name, std::string parameter, bool negated) : name(name), parameter(parameter), negated(negated) {}
 
 
-std::string Condition::getName()
+std::string Condition::get_name()
 {
 	return this->name;
 }

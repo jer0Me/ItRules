@@ -4,30 +4,29 @@
 
 TEST(LexicalAnalyzer, testSimpleRule)
 {
-	std::string const input = "def type(name)\nbody\nend";
+	std::string const input = "def type(name)\nbody\nenddef type(name)\nbody\nend";
 	LexicalAnalyzer analyzer;
-	std::list<Rule> rules = analyzer.analyze(input);
-	Rule rule = *rules.begin();
-	Condition condition = *rule.get_conditions_iterator();
-	ASSERT_EQ("type", condition.getName());
-	ASSERT_EQ("name", condition.getParameter());
+	std::list<Rule*> rules = analyzer.analyze(input);
+	Rule* rule = *rules.begin();
+	std::list<Condition*> conditions = rule->get_conditions();
+	Condition* condition = *conditions.begin();
+	ASSERT_EQ("type", condition->get_name());
+	ASSERT_EQ("name", condition->getParameter());
+	ASSERT_EQ(2, rules.size());
 }
 
 TEST(LexicalAnalyzer, testRuleWithMarksAndOptions)
 {
 	std::string const input = "def type(person)\n$Name was born in $Country+Capitalize in $Birthday+Year\nend";
 	LexicalAnalyzer analyzer;
-	std::list<Rule> rules = analyzer.analyze(input);
-	Rule rule = *rules.begin();
-	Condition condition = *rule.get_conditions_iterator();
-	ASSERT_EQ("type", condition.getName());
-	ASSERT_EQ("person", condition.getParameter());
-	auto tokenIterator = rule.get_token_iterator();
-	Token* token = *tokenIterator;
-	Mark* mark = dynamic_cast<Mark *>(token);
-	ASSERT_EQ("Name", mark->getName());
+	std::list<Rule*> rules = analyzer.analyze(input);
+	Rule* rule = *rules.begin();
+	std::list<Condition*> conditions = rule->get_conditions();
+	Condition* condition = *conditions.begin();
+	ASSERT_EQ("type", condition->get_name());
+	ASSERT_EQ("person", condition->getParameter());
 
-	}
+}
 /*
  TEST(LexicalAnalyzer, testRuleWithEscapedCharacter)
 {

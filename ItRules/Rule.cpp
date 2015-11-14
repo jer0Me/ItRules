@@ -1,17 +1,40 @@
 #include "Rule.h"
 
-void Rule::setRule(std::list<Condition> conditions, std::list<Token*> tokens)
+Rule::Rule(std::list<Condition*> conditions, std::list<Token*> tokens) : conditions(conditions), tokens(tokens)
+{
+	this->initiated = true;
+}
+
+
+void Rule::set_rule(std::list<Condition*> conditions, std::list<Token*> tokens)
 {
 	this->conditions = conditions;
 	this->tokens = tokens;
+	this->initiated = true;
 }
 
-std::list<Condition>::iterator Rule::get_conditions_iterator()
+bool Rule::operator < (const Rule& rule) const
 {
-	return conditions.begin();
+	return true;
 }
 
-std::list<Token*>::iterator Rule::get_token_iterator()
+std::list<Condition*>& Rule::get_conditions()
 {
-	return tokens.begin();
+	return this->conditions;
 }
+
+bool Rule::is_initiated() const
+{
+	return initiated;
+}
+
+std::list<Token*> Rule::get_tokens()
+{
+	return tokens;
+}
+
+
+
+
+
+

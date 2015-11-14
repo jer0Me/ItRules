@@ -13,63 +13,219 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\engine">
+      <UniqueIdentifier>{0124c8fa-e6ad-4e31-bf85-6dfb19b302e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine">
+      <UniqueIdentifier>{e7b60f3c-4db5-4353-839e-3b88e7c4ab6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\parser">
+      <UniqueIdentifier>{4d9b4993-d929-4ddd-a272-7f0b783a9004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\parser">
+      <UniqueIdentifier>{91fec11f-0791-4b1e-b81b-7a8a4758bf12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\engine\formatters">
+      <UniqueIdentifier>{e2cfa1af-9827-4598-9ee2-d32454d65472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine\formatters">
+      <UniqueIdentifier>{83fd8d91-bbec-4266-aec0-83d3ed1ea4e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\engine\functions">
+      <UniqueIdentifier>{a59f16dc-a0ce-4510-b446-92b33a0300aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine\functions">
+      <UniqueIdentifier>{1ba21c69-f969-4254-8b22-9c1ab0a534b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\engine\model">
+      <UniqueIdentifier>{409e8c2f-8613-473e-8978-47c2ef28660c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine\model">
+      <UniqueIdentifier>{a158ef74-d024-4c3f-8fab-138e1218a8c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TemplateEngine.h">
+      <Filter>Archivos de encabezado\engine</Filter>
+    </ClInclude>
     <ClInclude Include="LexicalAnalyzer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="RuleList.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Rule.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\parser</Filter>
     </ClInclude>
     <ClInclude Include="LexicalTokenizer.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="RuleList.h">
+      <Filter>Archivos de encabezado\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Archivos de encabezado\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Archivos de encabezado\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FormatterStore.h">
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
+    </ClInclude>
+    <ClInclude Include="Formatter.h">
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionStore.h">
+      <Filter>Archivos de encabezado\engine\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>Archivos de encabezado\engine\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeFunction.h">
+      <Filter>Archivos de encabezado\engine\functions</Filter>
     </ClInclude>
     <ClInclude Include="Condition.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Token.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Mark.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Literal.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\engine\model</Filter>
     </ClInclude>
     <ClInclude Include="Expression.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Literal.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Mark.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Rule.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFrame.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMark.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="CompositeMark.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="DelegateMark.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveFrame.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="SlotMap.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="NonFormattingMark.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
+    </ClInclude>
+    <ClInclude Include="SlotFunction.h">
+      <Filter>Archivos de encabezado\engine\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="StringFormatter.h">
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
+    </ClInclude>
+    <ClInclude Include="DateFormatter.h">
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
+    </ClInclude>
+    <ClInclude Include="ItRules.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeSet.h">
+      <Filter>Archivos de encabezado\engine\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TemplateEngine.cpp">
+      <Filter>Archivos de código fuente\engine</Filter>
+    </ClCompile>
     <ClCompile Include="LexicalAnalyzer.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\parser</Filter>
     </ClCompile>
     <ClCompile Include="LexicalTokenizer.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Condition.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Rule.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\parser</Filter>
     </ClCompile>
     <ClCompile Include="RuleList.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\parser</Filter>
     </ClCompile>
-    <ClCompile Include="Token.cpp">
-      <Filter>Archivos de código fuente</Filter>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Archivos de código fuente\engine</Filter>
     </ClCompile>
-    <ClCompile Include="Mark.cpp">
-      <Filter>Archivos de código fuente</Filter>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Archivos de código fuente\engine</Filter>
     </ClCompile>
-    <ClCompile Include="Literal.cpp">
-      <Filter>Archivos de código fuente</Filter>
+    <ClCompile Include="FormatterStore.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="Formatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionStore.cpp">
+      <Filter>Archivos de código fuente\engine\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Function.cpp">
+      <Filter>Archivos de código fuente\engine\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeFunction.cpp">
+      <Filter>Archivos de código fuente\engine\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractFrame.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Condition.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
     </ClCompile>
     <ClCompile Include="Expression.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\engine\model</Filter>
     </ClCompile>
+    <ClCompile Include="Mark.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Rule.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Token.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Literal.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractMark.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="CompositeMark.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="DelegateMark.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimitiveFrame.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="SlotMap.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="NonFormattingMark.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="SlotFunction.cpp">
+      <Filter>Archivos de código fuente\engine\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeSet.cpp">
+      <Filter>Archivos de código fuente\engine\model</Filter>
+    </ClCompile>
+    <ClCompile Include="StringFormatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="DateFormatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

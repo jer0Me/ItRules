@@ -6,5 +6,5 @@ class LexicalAnalyzer
 {
 public:
 	LexicalAnalyzer();
-	std::list<Rule>analyze(std::string rules) const;
+	std::list<Rule*>analyze(std::string rules) const;
 };

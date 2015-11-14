@@ -5,11 +5,11 @@
 LexicalAnalyzer::LexicalAnalyzer() {}
 
 
-std::list<Rule>LexicalAnalyzer::analyze(std::string input) const
+std::list<Rule*>LexicalAnalyzer::analyze(std::string input) const
 {
 	namespace qi = boost::spirit::qi;
 	LexicalTokenizer lexicalTokenizer;
-	std::list<Rule> rules;
+	std::list<Rule*> rules;
 	std::string::const_iterator iter = input.begin();
 	std::string::const_iterator end = input.end();
 

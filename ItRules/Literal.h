@@ -8,5 +8,6 @@ class Literal : public Token
 
 public:
 	Literal(std::string text);
-	std::string getText();
+	std::string get_text();
+	std::string to_string() override;
 };

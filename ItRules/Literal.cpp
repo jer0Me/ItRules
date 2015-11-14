@@ -2,8 +2,14 @@
 
 Literal::Literal(std::string text) : text(text) {}
 
-std::string Literal::getText()
+std::string Literal::get_text()
 {
-	return text;
+	return this->text;
 }
+
+std::string Literal::to_string()
+{
+	return this->text;
+}
+
 
