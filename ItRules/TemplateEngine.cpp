@@ -1,13 +1,10 @@
 ﻿#include "TemplateEngine.h"
-#include <algorithm>
 #include "Mark.h"
 #include "CompositeMark.h"
 #include "NonFormattingMark.h"
 #include "PrimitiveFrame.h"
 #include <boost/foreach.hpp>
 #include <boost/variant/get.hpp>
-
-using std::for_each;
 
 TemplateEngine::TemplateEngine()
 {
@@ -58,9 +55,8 @@ void TemplateEngine::pushBuffer(std::string indentation)
 
 bool TemplateEngine::execute(Trigger* trigger)
 {
-	Rule* rule = ruleFor(trigger);
-	if (rule->is_initiated() && execute(trigger, rule)) return true;
-	return false;
+	auto* rule = ruleFor(trigger);
+	return rule->is_initiated() && execute(trigger, rule);
 }
 
 bool TemplateEngine::execute(Trigger* trigger, Rule* rule)
