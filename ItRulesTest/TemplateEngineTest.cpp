@@ -3,44 +3,23 @@
 #include <TemplateEngine.h>
 #include <LexicalAnalyzer.h>
 #include <Frame.h>
-#include <PrimitiveFrame.h>
 #include <boost/date_time/gregorian/greg_date.hpp>
 
+using boost::gregorian::date;
+using boost::date_time::Jul;
 
 TEST(TemplateEngine, testSimpleRule)
 {
 	std::string const input = "def type(person)\nbody\nend";
 	LexicalAnalyzer analyzer;
-	auto rules = analyzer.analyze(input);
 	auto template_engine = new TemplateEngine();
-	template_engine->add(rules);
+	template_engine->add(analyzer.analyze(input));
 
 	Frame* frame = new Frame();
-	auto type_set = TypeSet();
-	type_set.insert("person");
-	auto slots_map = SlotMap();
-
-	std::list<AbstractFrame*> name;
-	auto* primitive_frame = new PrimitiveFrame();
-	primitive_frame->set_value("Pau Gasol");
-	name.push_back(primitive_frame);
-	slots_map.insert("name", name);
-
-	std::list<AbstractFrame*> birthday;
-	primitive_frame = new PrimitiveFrame();
-	boost::gregorian::date date(1980,boost::date_time::Jul, 06);
-	primitive_frame->set_value(date);
-	birthday.push_back(primitive_frame);
-	slots_map.insert("birthday", birthday);
-
-	std::list<AbstractFrame*> country;
-	primitive_frame = new PrimitiveFrame();
-	primitive_frame->set_value("spain");
-	country.push_back(primitive_frame);
-	slots_map.insert("country", country);
-
-	frame->set_types(type_set);
-	frame->set_slots(slots_map);
+	frame->add_types({ "object","person" })
+		->add_frame("name", "Pau Gasol")
+		->add_frame("birthday", date(1980, Jul, 06))
+		->add_frame("country","spain");
 
 	ASSERT_EQ("body", template_engine->render(frame));
 }

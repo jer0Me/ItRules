@@ -8,6 +8,8 @@ class PrimitiveFrame : public AbstractFrame
 
 public:
 
+	PrimitiveFrame(ItRules::type value);
+
 	void set_value(ItRules::type value);
 
 	ItRules::type get_value();

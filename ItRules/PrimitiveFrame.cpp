@@ -1,5 +1,8 @@
 ﻿#include "PrimitiveFrame.h"
 
+PrimitiveFrame::PrimitiveFrame(ItRules::type value) : value(value){}
+
+
 void PrimitiveFrame::set_value(ItRules::type value)
 {
 	this->value = value;

@@ -8,7 +8,7 @@ class SlotMap
 
 public:
 
-	std::list<AbstractFrame*> at(std::string key);
+	std::list<AbstractFrame*>& at(std::string key);
 	bool contain(std::string key) const;
 	void insert(std::string key, std::list<AbstractFrame*> frames);
 };

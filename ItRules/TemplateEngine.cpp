@@ -219,8 +219,7 @@ AbstractFrame* TemplateEngine::frame(ItRules::type value)
 	{
 		return pi;
 	}
-	auto* primitive_frame = new PrimitiveFrame();
-	primitive_frame->set_value(value);
+	auto* primitive_frame = new PrimitiveFrame(value);
 	return primitive_frame;
 }
 
