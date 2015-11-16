@@ -23,3 +23,20 @@ TEST(TemplateEngine, testSimpleRule)
 
 	ASSERT_EQ("body", template_engine->render(frame));
 }
+
+
+TEST(TemplateEngine, testRuleWithMultipleMarksAndOption)
+{
+std::string const input = "def type(person)\n$Name was born in $Country+Capitalize in $Birthday+Year\nend";
+LexicalAnalyzer analyzer;
+auto* template_engine = new TemplateEngine();
+template_engine->add(analyzer.analyze(input));
+
+Frame* frame = new Frame();
+frame->add_types({ "object","person" })
+->add_frame("name", "Pau Gasol")
+->add_frame("birthday", date(1980, Jul, 06))
+->add_frame("country","spain");
+
+ASSERT_EQ("Pau Gasol was born in Spain in 1980", template_engine->render(frame));
+}

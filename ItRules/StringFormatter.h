@@ -12,6 +12,7 @@ class StringFormatter
 public:
 
 	StringFormatter();
+	~StringFormatter();
 	std::map<std::string, Formatter*>& get();
 	
 };

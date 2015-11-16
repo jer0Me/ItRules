@@ -16,3 +16,8 @@ std::string Token::to_string()
 {
 	return "";
 }
+
+bool Token::is_type(std::string type)
+{
+	return false;
+}

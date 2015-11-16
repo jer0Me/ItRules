@@ -14,5 +14,6 @@ class FunctionStore
 
 public:
 	FunctionStore();
+	~FunctionStore();
 	Function* get(Condition* condition);
 };

@@ -3,7 +3,7 @@
 #include "Token.h"
 #include <list>
 
-class Rule
+class Rule : public Token
 {
 	std::list<Condition*> conditions;	
 	std::list<Token*> tokens;

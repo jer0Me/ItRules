@@ -10,6 +10,7 @@ class DateFormatter
 public:
 
 	DateFormatter();
+	~DateFormatter();
 	std::map<std::string, Formatter*>& get();
 	
 };

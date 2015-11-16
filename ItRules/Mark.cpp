@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "Literal.h"
 
+
 Mark::Mark(std::string name) : name(name){}
 
 Mark::Mark(std::string name, std::vector<std::string> options, std::string separator) : name(name), options(options), separator(separator){}

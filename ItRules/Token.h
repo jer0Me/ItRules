@@ -11,4 +11,5 @@ public:
 	void set_previous(Token* previous);
 	Token* get_previous();
 	virtual std::string to_string();
+	virtual bool is_type(std::string type);
 };

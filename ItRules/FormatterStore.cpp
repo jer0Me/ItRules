@@ -2,45 +2,47 @@
 #include "StringFormatter.h"
 #include "DateFormatter.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
 #include <boost/variant/get.hpp>
 
 FormatterStore::FormatterStore()
 {
-	auto string_formatter = StringFormatter();
-	auto date_formatter = DateFormatter();
-	this->map.insert(string_formatter.get().begin(), string_formatter.get().end());
-	this->map.insert(date_formatter.get().begin(), date_formatter.get().end());
+	this->string_formatter = new StringFormatter();
+	this->date_formatter = new DateFormatter();
+	this->map.insert(string_formatter->get().begin(), string_formatter->get().end());
+	this->map.insert(date_formatter->get().begin(), date_formatter->get().end());
 }
 
 FormatterStore::~FormatterStore()
 {
-	typedef std::map<std::string, Formatter*> formatter_map;
-	BOOST_FOREACH(formatter_map::value_type &value, this->map)
-	{
-		delete value.second;
-	}
+	delete string_formatter;
+	delete date_formatter;
 }
 
 
 Formatter* FormatterStore::get(std::string name)
 {
-	return name.empty() ? formatter(name) : null_formatter();
+	return name.empty() == 0 ? formatter(name) : null_formatter();
 }
 
 Formatter* FormatterStore::formatter(std::string name)
 {
-	boost::trim(name);
-	boost::to_lower(name);
-	return exists(name) ? this->map.at(name) : unknown_formatter();
+	return exists(name) ? create_formatter(name) : unknown_formatter();
 }
 
-bool FormatterStore::exists(std::string name) const
+Formatter* FormatterStore::create_formatter(std::string name)
 {
-	return this->map.count(name) > 0;
+	boost::to_lower(name);
+	auto* formatter = this->map.at(name);
+	return formatter;
 }
 
-Formatter* FormatterStore::unknown_formatter() const
+bool FormatterStore::exists(std::string name)
+{
+	boost::to_lower(name);
+	return map.find(name) != map.end();
+}
+
+Formatter* FormatterStore::unknown_formatter()
 {
 	class unknown_formatter: public Formatter
 	{
@@ -51,7 +53,7 @@ Formatter* FormatterStore::unknown_formatter() const
 	return new unknown_formatter();
 }
 
-Formatter* FormatterStore::null_formatter() const
+Formatter* FormatterStore::null_formatter()
 {
 	class null_formatter: public Formatter
 	{

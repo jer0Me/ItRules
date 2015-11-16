@@ -1,13 +1,16 @@
 ﻿#include "Buffer.h"
-#include <algorithm>
+#include "boost/date_time/gregorian/gregorian.hpp"
+#include <boost/variant/get.hpp>
+
 Buffer::Buffer(std::string indentation)
 {
 	this->indentation = indentation;
 }
 
-void Buffer::write(std::string text)
+void Buffer::write(ItRules::type text)
 {
-	this->content += indent(text);
+	if (is_string(text)) this->content += indent(boost::get<std::string>(text));
+	if (is_date(text)) this->content += indent(date_to_string(text));
 }
 
 std::string Buffer::indent(std::string text)
@@ -47,3 +50,34 @@ void Buffer::write(Buffer* buffer)
 	write(buffer->get_content());
 }
 
+std::string Buffer::date_to_string(ItRules::type text)
+{
+	return boost::gregorian::to_simple_string(boost::get<boost::gregorian::date>(text));
+}
+
+
+bool Buffer::is_string(ItRules::type text)
+{
+	try
+	{
+		boost::get<std::string>(text);
+		return true;
+	}
+	catch (std::exception exception)
+	{
+		return false;
+	}
+}
+
+bool Buffer::is_date(ItRules::type text)
+{
+	try
+	{
+		boost::get<boost::gregorian::date>(text);
+		return true;
+	}
+	catch (std::exception exception)
+	{
+		return false;
+	}
+}

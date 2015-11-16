@@ -15,10 +15,12 @@ class TemplateEngine
 {
 	std::set<Rule*> ruleSet;
 	std::stack<Buffer*> buffers;
-	FunctionStore function_store;
-	FormatterStore formater_store;
+	FunctionStore* function_store;
+	FormatterStore* formatter_store;
 
 	void initBuffer();
+
+	void delete_buffer();
 
 	void pushBuffer(std::string indentation);
 
@@ -48,7 +50,7 @@ class TemplateEngine
 
 	void write_separator(AbstractMark* mark);
 
-	void write(std::string text);
+	void write(ItRules::type text);
 
 	AbstractFrame* frame(ItRules::type value);
 
@@ -62,6 +64,10 @@ class TemplateEngine
 
 	bool is_primitive_frame(ItRules::type value);
 
+	bool is_abstract_frame(ItRules::type value);
+
+	AbstractMark* non_formatting_mark(AbstractMark* mark);
+
 	bool pop_buffer();
 
 	std::string document_of(Buffer* buffer);
@@ -70,7 +76,9 @@ class TemplateEngine
 public:
 	TemplateEngine();
 
-	TemplateEngine add(std::list<Rule*> rules);
+	~TemplateEngine();
+
+	TemplateEngine* add(std::list<Rule*> rules);
 
 	std::string render(AbstractFrame* frame);
 

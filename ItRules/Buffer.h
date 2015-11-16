@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <string>
+#include "ItRules.h"
 
 class Buffer
 {
@@ -9,10 +9,14 @@ class Buffer
 
 	std::string indent(std::string text);
 
+	bool is_string(ItRules::type text);
+	bool is_date(ItRules::type text);
+	std::string date_to_string(ItRules::type text);
+
 public:
 
 	Buffer(std::string indentation);
-	void write(std::string);
+	void write(ItRules::type text);
 	void write(Buffer* buffer);
 	std::string get_content();
 	void used();

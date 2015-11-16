@@ -1,12 +1,23 @@
 ﻿#include "FunctionStore.h"
 #include "TypeFunction.h"
 #include <boost/algorithm/string.hpp>
+#include "SlotFunction.h"
+#include <boost/foreach.hpp>
 
 
 FunctionStore::FunctionStore()
 {
-	auto* typeFunction = new TypeFunction();
-	map.insert(std::pair<std::string, Function*>("type",typeFunction));
+	map.insert(std::pair<std::string, Function*>("type", new TypeFunction()));
+	map.insert(std::pair<std::string, Function*>("slot", new SlotFunction()));
+}
+
+FunctionStore::~FunctionStore()
+{
+	typedef std::map<std::string, Function*> function_map;
+	BOOST_FOREACH(function_map::value_type &value, this->map)
+	{
+		delete value.second;
+	}
 }
 
 Function* FunctionStore::get(Condition* condition)

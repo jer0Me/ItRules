@@ -10,4 +10,5 @@ public:
 	Literal(std::string text);
 	std::string get_text();
 	std::string to_string() override;
+	bool is_type(std::string type) override;
 };

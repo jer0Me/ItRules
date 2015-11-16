@@ -5,20 +5,38 @@
 #include "PrimitiveFrame.h"
 #include <boost/foreach.hpp>
 #include <boost/variant/get.hpp>
+#include <boost/algorithm/string.hpp>
 
 TemplateEngine::TemplateEngine()
 {
-	this->function_store = FunctionStore();
+	this->function_store = new FunctionStore();
+	this->formatter_store = new FormatterStore();
 }
 
+TemplateEngine::~TemplateEngine()
+{
+	delete this->function_store;
+	delete this->formatter_store;
+	delete_buffer();
+}
 
-TemplateEngine TemplateEngine::add(std::list<Rule*> rules)
+void TemplateEngine::delete_buffer()
+{
+	while (!this->buffers.empty())
+	{
+		auto* buffer = this->buffers.top();
+		delete(buffer);
+		this->buffers.pop();
+	}
+}
+
+TemplateEngine* TemplateEngine::add(std::list<Rule*> rules)
 {
 	BOOST_FOREACH(Rule* rule, rules)
 	{
 		ruleSet.insert(rule);
 	}
-	return *this;
+	return this;
 }
 
 std::string TemplateEngine::render(AbstractFrame* frame)
@@ -39,12 +57,7 @@ std::string document_of(Buffer* buffer)
 
 void TemplateEngine::initBuffer()
 {
-	while(!this->buffers.empty())
-	{
-		auto* buffer = this->buffers.top();
-		delete(buffer);
-		this->buffers.pop();
-	}
+	delete_buffer();
 	pushBuffer("");
 }
 
@@ -85,7 +98,6 @@ AbstractMark* TemplateEngine::compose_mark(Trigger* trigger, AbstractMark* mark)
 	return trigger->get_frame()->is_primitive() ? new CompositeMark(mark, trigger->get_mark()->get_options()) : mark;
 }
 
-
 bool TemplateEngine::render_frame(AbstractFrame* frame, AbstractMark* mark)
 {
 	return frame->is_primitive() ? render_primitive_frame(frame, mark) : render_composite_frame(frame, mark);
@@ -94,7 +106,6 @@ bool TemplateEngine::render_frame(AbstractFrame* frame, AbstractMark* mark)
 bool TemplateEngine::render_composite_frame(AbstractFrame* frame, AbstractMark* mark)
 {
 	auto frames = frame->get_frames(mark->get_name());
-
 	return frames.size() != 0 && render_frames(frames, mark);
 }
 
@@ -105,7 +116,7 @@ bool TemplateEngine::render_frames(std::list<AbstractFrame*> frames, AbstractMar
 	{
 		pushBuffer(mark->get_indentation());
 		if (rendered && mark->is_multiple()) write_separator(mark);
-		rendered = rendered | trigger(format(frame, mark), new NonFormattingMark(mark));
+		rendered = rendered | trigger(format(frame, mark), new NonFormattingMark(mark, this->formatter_store));
 		pop_buffer();
 	}
 	
@@ -133,15 +144,18 @@ bool TemplateEngine::trigger(ItRules::type value, AbstractMark* mark)
 	return true;
 }
 
-
 bool TemplateEngine::is_primitive_frame(ItRules::type value)
 {
-	if(AbstractFrame* pi = boost::get<AbstractFrame*>(value))
+	try
 	{
-		return dynamic_cast<PrimitiveFrame*>(pi) != nullptr;
+		boost::get<AbstractFrame*>(value);
+		return true;
+	}
+	catch (std::exception exception)
+	{
+		return false;
 	}
 }
-
 
 ItRules::type TemplateEngine::format(ItRules::type value, Formatter* formatter)
 {
@@ -157,9 +171,9 @@ ItRules::type TemplateEngine::format(ItRules::type value, AbstractMark* mark)
 		result = primitiveFrame->get_value();
 	}
 		
-	BOOST_FOREACH(std::string option,mark->get_options())
+	BOOST_FOREACH(std::string option, mark->get_options())
 	{
-		result = format(result, formater_store.get(option));
+		result = format(result, formatter_store->get(option));
 	}
 	return result;
 }
@@ -169,23 +183,35 @@ void TemplateEngine::write_separator(AbstractMark* mark)
 	write(mark->get_separator());
 }
 
-void TemplateEngine::write(std::string text)
+void TemplateEngine::write(ItRules::type text)
 {
 	auto* buffer = this->buffers.top();
 	buffer->write(text);
 }
 
-
 bool TemplateEngine::render_primitive_frame(AbstractFrame* frame, AbstractMark* mark)
 {
-	return frame->is_primitive() ? render_primitive_frame(frame, mark) :
-		render_composite_frame(frame, mark);
+	std::string markName = mark->get_name();
+	boost::to_lower(markName);
+	if (markName.compare("value") != 0) return false;
+	write(format(frame, mark));
+	Buffer* buffer = this->buffers.top();
+	buffer->used();
+	return true;
 }
-
 
 bool TemplateEngine::is_abstract_mark(Token* token)
 {
-	return dynamic_cast<AbstractMark *> (token) != nullptr;
+	try
+	{
+		AbstractMark* abstractMark = dynamic_cast<AbstractMark *> (token);
+		return abstractMark != nullptr;
+	} 
+	catch (std::exception exception) 
+	{
+		return false;
+	}
+
 }
 
 Rule* TemplateEngine::ruleFor(Trigger* trigger)
@@ -198,6 +224,7 @@ Rule* TemplateEngine::ruleFor(Trigger* trigger)
 	}
 	return nullptr;
 }
+
 bool TemplateEngine::match(Rule* rule, Trigger* trigger)
 {
 	BOOST_FOREACH(Condition* condition, rule->get_conditions())
@@ -207,17 +234,16 @@ bool TemplateEngine::match(Rule* rule, Trigger* trigger)
 	return true;
 }
 
-
 bool TemplateEngine::conditionMatchTrigger(Trigger* trigger, Condition* condition)
 {
-	return function_store.get(condition)->match(trigger, condition->getParameter());
+	return function_store->get(condition)->match(trigger, condition->getParameter());
 }
 
 AbstractFrame* TemplateEngine::frame(ItRules::type value)
 {
-	if (AbstractFrame* pi = boost::get<AbstractFrame*>(value))
+	if (is_abstract_frame(value))
 	{
-		return pi;
+		return boost::get<AbstractFrame*>(value);
 	}
 	auto* primitive_frame = new PrimitiveFrame(value);
 	return primitive_frame;
@@ -226,4 +252,16 @@ AbstractFrame* TemplateEngine::frame(ItRules::type value)
 std::string TemplateEngine::document_of(Buffer* buffer)
 {
 	return buffer->get_content();
+}
+
+bool TemplateEngine::is_abstract_frame(ItRules::type value)
+{
+	try
+	{
+		boost::get<AbstractFrame*>(value);
+		return true;
+	} catch (std::exception exception)
+	{
+		return false;
+	}
 }

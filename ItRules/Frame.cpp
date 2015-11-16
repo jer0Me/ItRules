@@ -3,6 +3,13 @@
 #include "PrimitiveFrame.h"
 
 
+Frame::Frame()
+{
+	this->types = TypeSet();
+	this->slots = SlotMap();
+}
+
+
 Frame * Frame::add_types(std::initializer_list<std::string> types)
 {
 	BOOST_FOREACH(std::string type, types)
@@ -66,7 +73,7 @@ bool Frame::is_primitive()
 std::list<AbstractFrame*> Frame::get_frames(std::string slot)
 {
 	std::list<AbstractFrame*> emptyList; 
-	return slots.contain(slot) ? slots.at(slot) : emptyList;
+	return this->slots.contain(slot) ? this->slots.at(slot) : emptyList;
 }
 
 void Frame::set_types(TypeSet& types)

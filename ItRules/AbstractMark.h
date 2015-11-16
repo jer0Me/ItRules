@@ -23,5 +23,6 @@ public:
 
 	virtual std::string to_string();
 
+	bool is_type(std::string type) override;
 
 };

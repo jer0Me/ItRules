@@ -1,4 +1,5 @@
 ﻿#include "AbstractMark.h"
+#include <boost/algorithm/string.hpp>
 
 
 AbstractMark::~AbstractMark()
@@ -43,4 +44,9 @@ std::string AbstractMark::to_string()
 	return "";
 }
 
+bool AbstractMark::is_type(std::string type)
+{
+	boost::to_lower(type);
+	return type.compare("abstractmark") == 0;
+}
 

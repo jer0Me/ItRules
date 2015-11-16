@@ -3,6 +3,7 @@
 
 std::list<AbstractFrame*>& SlotMap::at(std::string key)
 {
+	boost::to_lower(key);
 	try {
 		return this->slots.at(key);     
 	}
