@@ -24,7 +24,7 @@ Formatter* StringFormatter::upper_case()
 {
 	class uppercase: public Formatter
 	{
-		std::string format(ItRules::type value) override {
+		ItRules::type format(ItRules::type value) override {
 			auto text = boost::get<std::string>(value);
 			boost::to_upper(text);
 			return text;
@@ -37,7 +37,7 @@ Formatter* StringFormatter::capitalize()
 {
 	class capitalize : public Formatter
 	{
-		std::string format(ItRules::type value) override {
+		ItRules::type format(ItRules::type value) override {
 			auto text = boost::get<std::string>(value);
 			transform(text.begin(), text.begin()+1, text.begin(), ::toupper);
 			return text;

@@ -46,8 +46,8 @@ Formatter* FormatterStore::unknown_formatter()
 {
 	class unknown_formatter: public Formatter
 	{
-		std::string format(ItRules::type value) override {
-			return boost::get<std::string>(value);
+		ItRules::type format(ItRules::type value) override {
+			return value;
 		}
 	};
 	return new unknown_formatter();
@@ -57,8 +57,8 @@ Formatter* FormatterStore::null_formatter()
 {
 	class null_formatter: public Formatter
 	{
-		std::string format(ItRules::type value) override {
-			return boost::get<std::string>(value);
+		ItRules::type format(ItRules::type value) override {
+			return value;
 		}
 	};
 	return new null_formatter();

@@ -12,7 +12,7 @@ TEST(LexicalAnalyzer, testSimpleRule)
 	Condition* condition = *conditions.begin();
 	ASSERT_EQ("type", condition->get_name());
 	ASSERT_EQ("name", condition->getParameter());
-	ASSERT_EQ(2, rules.size());
+	ASSERT_EQ(3, rules.size());
 }
 
 TEST(LexicalAnalyzer, testRuleWithMarksAndOptions)

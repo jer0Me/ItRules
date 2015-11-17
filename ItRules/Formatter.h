@@ -5,7 +5,7 @@
 class Formatter
 {
 public:
-	virtual std::string format(ItRules::type value);
+	virtual ItRules::type format(ItRules::type value);
 	virtual ~Formatter();
 
 };

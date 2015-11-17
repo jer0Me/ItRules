@@ -22,7 +22,7 @@ Formatter* DateFormatter::year()
 {
 	class year: public Formatter
 	{
-		std::string format(ItRules::type value) override {
+		ItRules::type format(ItRules::type value) override {
 			auto date = boost::get<boost::gregorian::date>(value);
 			return std::to_string(date.year_month_day().year);
 		}

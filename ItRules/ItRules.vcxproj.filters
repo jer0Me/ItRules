@@ -135,6 +135,9 @@
     <ClInclude Include="TypeSet.h">
       <Filter>Archivos de encabezado\engine\model</Filter>
     </ClInclude>
+    <ClInclude Include="TriggerFunction.h">
+      <Filter>Archivos de encabezado\engine\functions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TemplateEngine.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="DateFormatter.cpp">
       <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerFunction.cpp">
+      <Filter>Archivos de código fuente\engine\functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

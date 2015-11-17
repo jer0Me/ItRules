@@ -5,9 +5,11 @@ CompositeMark::CompositeMark(AbstractMark* mark, std::vector<std::string> option
 
 std::vector<std::string> CompositeMark::get_options()
 {
-	std::vector<std::string> result (this->options.size() + this->mark->get_options().size());
-	std::copy(this->options.begin(), this->options.end(), result.begin());
-	std::copy(this->mark->get_options().begin(), this->mark->get_options().end(), result.end() + 1);
+	std::vector<std::string> result;
+	auto markOptions = this->mark->get_options();
+	result.reserve(this->options.size() + markOptions.size());
+	result.insert(result.end(), this->options.begin(), this->options.end());
+	result.insert(result.end(), markOptions.begin(), markOptions.end());
 	return result;
 }
 

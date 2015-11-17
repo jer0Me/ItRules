@@ -46,8 +46,8 @@ void LexicalTokenizer::setMarkTokenDefinition()
 {
 	options %= no_skip[*(lit("+") >> +alnum)];
 	markText %= lexeme[lit("$") >> +alnum];
-	markWithDots %= lexeme[lit("$") >> +alnum >> string("...")];	
-	markList = (markWithDots >> lexeme[lit("[") >> string("$NL") >> lit("]")] >> options)[_val = new_<Mark>(_1, _3, _2)];
+	markWithDots %= lexeme[lit("$") >> +alnum >> lit("...")];	
+	markList = (markWithDots >> lexeme[lit("[") >> string("$NL") >> lit("]")] >> options)[_val = new_<Mark>(_1, _3, "\n")];
 	mark = markList[_val = _1] | (markText >> options)[_val = new_<Mark>(_1, _2)];
 }
 

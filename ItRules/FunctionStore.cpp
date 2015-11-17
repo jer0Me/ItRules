@@ -3,12 +3,14 @@
 #include <boost/algorithm/string.hpp>
 #include "SlotFunction.h"
 #include <boost/foreach.hpp>
+#include "TriggerFunction.h"
 
 
 FunctionStore::FunctionStore()
 {
 	map.insert(std::pair<std::string, Function*>("type", new TypeFunction()));
 	map.insert(std::pair<std::string, Function*>("slot", new SlotFunction()));
+	map.insert(std::pair<std::string, Function*>("trigger", new TriggerFunction()));
 }
 
 FunctionStore::~FunctionStore()
@@ -19,6 +21,7 @@ FunctionStore::~FunctionStore()
 		delete value.second;
 	}
 }
+
 
 Function* FunctionStore::get(Condition* condition)
 {
@@ -48,5 +51,9 @@ Function* FunctionStore::negatedFunction(Function* function)
 	return new Function();
 }
 
+void FunctionStore::add(std::string name, Function* function)
+{
+	map.insert(std::pair<std::string, Function*>(name, function));
+}
 
 

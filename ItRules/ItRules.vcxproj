@@ -47,6 +47,7 @@
     <ClInclude Include="TemplateEngine.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Trigger.h" />
+    <ClInclude Include="TriggerFunction.h" />
     <ClInclude Include="TypeFunction.h" />
     <ClInclude Include="TypeSet.h" />
   </ItemGroup>
@@ -78,6 +79,7 @@
     <ClCompile Include="TemplateEngine.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Trigger.cpp" />
+    <ClCompile Include="TriggerFunction.cpp" />
     <ClCompile Include="TypeFunction.cpp" />
     <ClCompile Include="TypeSet.cpp" />
   </ItemGroup>

@@ -21,6 +21,6 @@ public:
 
 	bool is_initiated() const;
 
-	std::list<Token*> get_tokens();
+	std::list<Token*>& get_tokens();
 
 };

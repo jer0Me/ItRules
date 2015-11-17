@@ -16,4 +16,5 @@ public:
 	FunctionStore();
 	~FunctionStore();
 	Function* get(Condition* condition);
+	void add(std::string name, Function* function);
 };

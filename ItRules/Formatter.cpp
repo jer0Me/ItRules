@@ -1,6 +1,6 @@
 ﻿#include "Formatter.h"
 
-std::string Formatter::format(ItRules::type value)
+ItRules::type Formatter::format(ItRules::type value)
 {
 	return "";
 }

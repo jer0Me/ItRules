@@ -80,6 +80,8 @@ public:
 
 	TemplateEngine* add(std::list<Rule*> rules);
 
+	TemplateEngine* add(std::string name, Function* function);
+
 	std::string render(AbstractFrame* frame);
 
 

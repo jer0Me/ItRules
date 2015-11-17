@@ -105,7 +105,7 @@ bool TemplateEngine::render_frame(AbstractFrame* frame, AbstractMark* mark)
 
 bool TemplateEngine::render_composite_frame(AbstractFrame* frame, AbstractMark* mark)
 {
-	auto frames = frame->get_frames(mark->get_name());
+	std::list<AbstractFrame*> frames = frame->get_frames(mark->get_name());
 	return frames.size() != 0 && render_frames(frames, mark);
 }
 
@@ -148,8 +148,12 @@ bool TemplateEngine::is_primitive_frame(ItRules::type value)
 {
 	try
 	{
-		boost::get<AbstractFrame*>(value);
-		return true;
+		if(is_abstract_frame(value))
+		{
+			auto primitive_frame = dynamic_cast<PrimitiveFrame*>(boost::get<AbstractFrame*>(value));
+			return primitive_frame != nullptr;
+		}
+		return false;
 	}
 	catch (std::exception exception)
 	{
@@ -167,8 +171,15 @@ ItRules::type TemplateEngine::format(ItRules::type value, AbstractMark* mark)
 	ItRules::type result = NULL;
 	if (is_primitive_frame(value))
 	{
-		PrimitiveFrame* primitiveFrame = dynamic_cast<PrimitiveFrame*>(boost::get<AbstractFrame*>(value));
-		result = primitiveFrame->get_value();
+		PrimitiveFrame* primitive_frame = dynamic_cast<PrimitiveFrame*>(boost::get<AbstractFrame*>(value));
+		result = primitive_frame->get_value();
+	}
+	else
+	{
+		if(is_abstract_frame(value))
+		{
+			result = dynamic_cast<AbstractFrame*>(boost::get<AbstractFrame*>(value));
+		}
 	}
 		
 	BOOST_FOREACH(std::string option, mark->get_options())
@@ -264,4 +275,10 @@ bool TemplateEngine::is_abstract_frame(ItRules::type value)
 	{
 		return false;
 	}
+}
+
+TemplateEngine* TemplateEngine::add(std::string name, Function* function)
+{
+	this->function_store->add(name, function);
+	return this;
 }

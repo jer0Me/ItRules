@@ -28,7 +28,7 @@ bool Rule::is_initiated() const
 	return initiated;
 }
 
-std::list<Token*> Rule::get_tokens()
+std::list<Token*>& Rule::get_tokens()
 {
 	return tokens;
 }
