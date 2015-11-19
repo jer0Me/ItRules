@@ -9,7 +9,7 @@
 using boost::gregorian::date;
 using boost::date_time::Jul;
 
-/*TEST(TemplateEngine, testSimpleRule)
+TEST(TemplateEngine, testSimpleRule)
 {
 	std::string const input = "def type(person)\nbody\nend";
 	LexicalAnalyzer analyzer;
@@ -44,12 +44,12 @@ TEST(TemplateEngine, testRuleWithMultipleMarksAndOption)
 	delete frame;
 	delete template_engine;
 }
-*/
-TEST(TemplateEngine, testMultiValue)
+
+TEST(TemplateEngine, testCustomFormatter)
 {
 	std::string const input = "def type(Person)\n\t$Name has $PetsCount+Letters pets:\n\t* $Pets...[$NL]\nend"
 		"\n\ndef type(Dog)\n\t$Name, a $Age dog\nend\n\ndef type(Cat)\n\t$Name, a $Age kitty\nend\n\n"
-		"\n\ndef trigger(Age)\n\t$value years old\nend";
+		"def trigger(Age) one()\n\tone year old\nend\n\ndef trigger(Age)\n\t$value+Letters years old\nend";
 	LexicalAnalyzer analyzer;
 	auto* template_engine = new TemplateEngine();
 	template_engine->add(analyzer.analyze(input));
@@ -76,7 +76,8 @@ TEST(TemplateEngine, testMultiValue)
 		}
 	};
 
-
+	Function* function = new one();
+	template_engine->add("one",function);
 
 	Frame* ruffo = new Frame();
 	ruffo->add_types({"dog","pet","object"})
@@ -101,11 +102,9 @@ TEST(TemplateEngine, testMultiValue)
 	
 	ASSERT_EQ("Roger Dickens has 3 pets:\n"
 		"* Ruffo, a 5 years old dog\n"
-		"Missy, a 1 years old kitty\n"
+		"Missy, a one year old kitty\n"
 		"Toby, a 3 years old dog", template_engine->render(frame));
 
-	
-	delete frame;
-	delete template_engine;
+
 
 }

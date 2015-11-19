@@ -24,10 +24,10 @@ TemplateEngine::~TemplateEngine()
 
 void TemplateEngine::delete_ruleset()
 {
-	for_each(this->rules.begin(), this->rules.end(), [](Rule* rule)
+	BOOST_FOREACH(Rule* rule, rules)
 	{
 		delete rule;
-	});
+	};
 	this->rules.clear();
 }
 
@@ -43,10 +43,10 @@ void TemplateEngine::delete_buffer()
 
 TemplateEngine* TemplateEngine::add(std::list<Rule*> list)
 {
-	for_each(list.begin(), list.end(), [this](Rule* rule)
+	BOOST_FOREACH(Rule* rule, list)
 	{
 		rules.push_back(rule);
-	});
+	};
 
 	return this;
 }
@@ -87,13 +87,10 @@ bool TemplateEngine::execute(Trigger* trigger)
 
 bool TemplateEngine::execute(Trigger* trigger, Rule* rule)
 {
-	auto tokens = rule->get_tokens();
-
-	for_each(tokens.begin(), tokens.end(), [this,trigger](Token* token)
+	BOOST_FOREACH(Token* token, rule->get_tokens())
 	{
 		execute(trigger, token);
-	});
-
+	};
 	return true;		
 }
 
@@ -129,7 +126,7 @@ bool TemplateEngine::render_frames(std::list<AbstractFrame*> frames, AbstractMar
 {
 	auto rendered = false;
 	AbstractMark* non_formatting_mark = nullptr;
-	for_each(frames.begin(), frames.end(), [this, &rendered, mark, &non_formatting_mark](AbstractFrame* abstract_frame)
+	BOOST_FOREACH(AbstractFrame* abstract_frame, frames)
 	{
 		pushBuffer(mark->get_indentation());
 		if (rendered && mark->is_multiple()) write_separator(mark);
@@ -137,8 +134,8 @@ bool TemplateEngine::render_frames(std::list<AbstractFrame*> frames, AbstractMar
 		rendered = rendered | trigger(format(abstract_frame, mark), non_formatting_mark);
 		pop_buffer();
 		delete non_formatting_mark;
-	});
-	
+	}
+
 	return rendered;
 }
 
@@ -201,13 +198,11 @@ ItRules::type TemplateEngine::format(ItRules::type value, AbstractMark* mark)
 			result = dynamic_cast<AbstractFrame*>(boost::get<AbstractFrame*>(value));
 		}
 	}
-		
-	auto options = mark->get_options();
-	for_each(options.begin(), options.end(), [this, &result](std::string option)
+
+	BOOST_FOREACH(std::string option, mark->get_options())
 	{
 		result = format(result, formatter_store->get(option));
-	});
-
+	};
 	return result;
 }
 
@@ -250,35 +245,20 @@ bool TemplateEngine::is_abstract_mark(Token* token)
 
 Rule* TemplateEngine::ruleFor(Trigger* trigger)
 {
-	Rule* result = nullptr;
-	for_each(this->rules.begin(), this->rules.end(), [this, trigger, &result](Rule* rule)
+	BOOST_FOREACH(Rule* rule, rules)
 	{
-		if(result == nullptr)
-		{
-			if (match(rule, trigger)) {
-				result = rule;
-			}
-		}
-	});
-	return result;
+		if (match(rule, trigger)) return rule;
+	}
+	return  nullptr;
 }
 
 bool TemplateEngine::match(Rule* rule, Trigger* trigger)
 {
-	auto conditions = rule->get_conditions();
-	auto result = true;
-	for_each(conditions.begin(), conditions.end(), [this, trigger, &result](Condition* condition)
+	BOOST_FOREACH(Condition* condition, rule->get_conditions())
 	{
-		if(result)
-		{
-			if (!conditionMatchTrigger(trigger, condition)) {
-				result = false;
-			};
-		}
-		
-	});
-
-	return result;
+		if (!conditionMatchTrigger(trigger, condition)) return false;
+	}
+	return true;
 }
 
 bool TemplateEngine::conditionMatchTrigger(Trigger* trigger, Condition* condition)

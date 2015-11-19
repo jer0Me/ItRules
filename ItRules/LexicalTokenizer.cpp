@@ -30,7 +30,15 @@ LexicalTokenizer::LexicalTokenizer() : base_type(start)
 	setConditionDefinition();
 	setTokensDefinition();
 	setRulesDefinition();
-	
+	BOOST_SPIRIT_DEBUG_NODES(
+		(mark)
+		(markList)
+		(separator)
+		(markWithDots)
+		(escaped_character)
+		(options)
+		(markText)
+		)
 }
 
 
@@ -44,10 +52,13 @@ void LexicalTokenizer::setConditionDefinition()
 
 void LexicalTokenizer::setMarkTokenDefinition()
 {
+	escaped_character %= no_skip[lit("$") >> (string("$") | string("[") | string("]") | lit("NL")[_val = "\n"])];
 	options %= no_skip[*(lit("+") >> +alnum)];
 	markText %= lexeme[lit("$") >> +alnum];
-	markWithDots %= lexeme[lit("$") >> +alnum >> lit("...")];	
-	markList = (markWithDots >> lexeme[lit("[") >> string("$NL") >> lit("]")] >> options)[_val = new_<Mark>(_1, _3, "\n")];
+	markWithDots %= lexeme[lit("$") >> +alnum >> lit("...")];
+	separatorChar %= no_skip[+(char_ - "]")];
+	separator %= lit("[") >> (escaped_character | separatorChar) >> lit("]");
+	markList = (markWithDots >> separator >> options)[_val = new_<Mark>(_1, _3, _2)];
 	mark = markList[_val = _1] | (markText >> options)[_val = new_<Mark>(_1, _2)];
 }
 
@@ -55,7 +66,6 @@ void LexicalTokenizer::setLiteralTokenDefinition()
 {
 	charAdmitted %= no_skip[char_ - lit("$")];
 	tab = ((!eol >> charAdmitted) >> no_skip[string("\t")] >> charAdmitted)[_val += _1 + _2 + _3] | no_skip[lit("\t")];
-	escaped_character %= no_skip[lit("$") >> string("$") | string("[") | string("]")];
 	text %= +(!((eol >> lit("end") | lit("["))) >> (tab | escaped_character | charAdmitted));
 	literal = text[_val = new_<Literal>(_1)];
 }

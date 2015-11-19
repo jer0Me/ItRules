@@ -46,6 +46,7 @@ private:
 	qi::rule<Iterator, std::list<Rule*>(), Skipper> start;
 	qi::rule<Iterator, std::string(), Skipper> charAdmitted;
 	qi::rule<Iterator, Condition*(), Skipper> condition;
+	qi::rule<Iterator, std::string(), Skipper> separatorChar;
 };
 
 
