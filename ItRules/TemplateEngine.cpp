@@ -82,7 +82,7 @@ bool TemplateEngine::execute(Trigger* trigger)
 {
 	auto rule = ruleFor(trigger);
 
-	return rule->is_initiated() && execute(trigger, rule);
+	return rule != nullptr && execute(trigger, rule);
 }
 
 bool TemplateEngine::execute(Trigger* trigger, Rule* rule)
@@ -97,6 +97,7 @@ bool TemplateEngine::execute(Trigger* trigger, Rule* rule)
 bool TemplateEngine::execute(Trigger* trigger, Token* token)
 {
 	if (is_abstract_mark(token)) return execute(trigger, dynamic_cast<AbstractMark *>(token));
+	if (is_expression(token)) return execute(trigger, dynamic_cast<Expression*>(token));
 	write(token->to_string());
 	return true;
 }
@@ -171,6 +172,19 @@ bool TemplateEngine::is_primitive_frame(ItRules::type value)
 			return primitive_frame != nullptr;
 		}
 		return false;
+	}
+	catch (std::exception exception)
+	{
+		return false;
+	}
+}
+
+bool TemplateEngine::is_expression(Token* token)
+{
+	try
+	{
+		auto expression = dynamic_cast<Expression*>(token);
+		return expression != nullptr;
 	}
 	catch (std::exception exception)
 	{
@@ -297,4 +311,33 @@ TemplateEngine* TemplateEngine::add(std::string name, Function* function)
 {
 	this->function_store->add(name, function);
 	return this;
+}
+
+bool TemplateEngine::execute(Trigger* trigger, Expression* expression)
+{
+	auto result = true;
+	while(expression != nullptr)
+	{
+		pushBuffer("");
+		if(is_constant(expression))
+		{
+			this->buffers.top()->used();
+		}
+		BOOST_FOREACH(Token* token, expression->get_tokens())
+		{
+			result &= execute(trigger, token);
+		}
+		expression = expression->get_other();
+		if (pop_buffer()) break;
+	}
+	return result;
+}
+
+bool TemplateEngine::is_constant(Expression * expression)
+{
+	BOOST_FOREACH(Token* token, expression->get_tokens())
+	{
+		if (is_abstract_mark(token)) return false;
+	}
+	return true;
 }

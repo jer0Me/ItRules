@@ -8,6 +8,7 @@
 #include "FunctionStore.h"
 #include "Formatter.h"
 #include "FormatterStore.h"
+#include "Expression.h"
 
 
 class TemplateEngine
@@ -66,6 +67,12 @@ class TemplateEngine
 	bool is_abstract_frame(ItRules::type value);
 
 	bool pop_buffer();
+
+	bool execute(Trigger* trigger, Expression* expression);
+
+	bool is_constant(Expression* expression);
+
+	bool is_expression(Token* token);
 
 	std::string document_of(Buffer* buffer);
 

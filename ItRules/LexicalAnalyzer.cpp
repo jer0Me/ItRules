@@ -2,6 +2,7 @@
 #include "LexicalTokenizer.h"
 #include <boost/spirit/include/qi.hpp>
 #include "Mark.h"
+#include "Expression.h"
 
 LexicalAnalyzer::LexicalAnalyzer() {}
 
@@ -35,19 +36,16 @@ void LexicalAnalyzer::setTokenPrevious(std::list<Token*>& tokens)
 	Token* previous = nullptr;
 	Token* current = nullptr;
 	auto index = 0;
-	while (index++ != tokens.size() - 1)
+	while (index++ != tokens.size())
 	{
-		if (index == 0)
-		{
-			previous = *iterator;
+		current = *iterator;
+		current->set_previous(previous);
+		previous = current;
+		if (is_expression(current)) {
+			auto expression = dynamic_cast<Expression*>(current);
+			setTokenPrevious(expression->get_tokens());
 		}
-		else
-		{
-			current = *iterator;
-			current->set_previous(previous);
-			previous = current;
-			++iterator;
-		}
+		++iterator;
 	}
 }
 
@@ -58,4 +56,18 @@ void LexicalAnalyzer::addSlotRule(std::list<Rule*>& rules)
 	std::list<Token*> tokens;
 	tokens.push_back(new Mark("value"));
 	rules.push_back(new Rule(conditions, tokens));
+}
+
+
+bool LexicalAnalyzer::is_expression(Token* token)
+{
+	try
+	{
+		auto expression = dynamic_cast<Expression*>(token);
+		return expression != nullptr;
+	}
+	catch (std::exception exception)
+	{
+		return false;
+	}
 }

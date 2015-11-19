@@ -1,7 +1,7 @@
-﻿#include "Mark.h"
-#include <algorithm>
+﻿#include <algorithm>
+#include <boost/algorithm/string.hpp>
+#include "Mark.h"
 #include "Literal.h"
-
 
 Mark::Mark(std::string name) : name(name){}
 
@@ -58,12 +58,12 @@ std::string Mark::indent_of(Token* token)
 
 std::string Mark::text_of(Token* token)
 {
-	return is_literal(token) ? dynamic_cast<Literal *> (token)->get_text() : "";
+	return is_literal(token) ? dynamic_cast<Literal*> (token)->get_text() : "";
 }
 
 bool Mark::is_literal(Token* token)
 {
-	Literal* literal = dynamic_cast<Literal *> (token);
+	auto* literal = dynamic_cast<Literal*> (token);
 	return literal != nullptr;
 }
 

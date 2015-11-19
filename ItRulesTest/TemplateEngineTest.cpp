@@ -104,7 +104,44 @@ TEST(TemplateEngine, testCustomFormatter)
 		"* Ruffo, a 5 years old dog\n"
 		"Missy, a one year old kitty\n"
 		"Toby, a 3 years old dog", template_engine->render(frame));
+}
 
+TEST(TemplateEngine, testRecursiveRule)
+{
+	std::string const input = "def type(Module)\n\t<module name=\"$name\">[\n"
+		"\t\t$modules...[$NL]\n\t]</module>\nend";
 
+	LexicalAnalyzer analyzer;
+	auto* template_engine = new TemplateEngine();
+	template_engine->add(analyzer.analyze(input));
 
+	auto first_one_level = new Frame();
+	first_one_level->add_types({ "module","object" })
+		->add_frame("name", "1.1")
+		->add_frame("modulescount", 1);
+
+	auto first_two_level = new Frame();
+	first_two_level->add_types({ "module","object" })
+		->add_frame("name", "1.2")
+		->add_frame("modulescount", 1);
+
+	auto first_level = new Frame();
+	first_level->add_types({ "module","object" })
+		->add_frame("name", 1)
+		->add_frame("modulescount", 1)
+		->add_frame("modules", {
+			first_one_level, first_two_level
+		});
+
+	auto root= new Frame();
+	root->add_types({ "module","object" })
+		->add_frame("name", "X")
+		->add_frame("modulescount", 5)
+		->add_frame("modules", {
+				first_level
+		});
+
+	std::string result = template_engine->render(root);
+	std::cout << result;
+	
 }

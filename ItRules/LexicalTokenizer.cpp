@@ -31,13 +31,29 @@ LexicalTokenizer::LexicalTokenizer() : base_type(start)
 	setTokensDefinition();
 	setRulesDefinition();
 	BOOST_SPIRIT_DEBUG_NODES(
-		(mark)
-		(markList)
-		(separator)
-		(markWithDots)
+		(conditionType)
+		(conditionParameter)
+		(conditions)
 		(escaped_character)
-		(options)
+		(expressionLiteralText)
+		(expression)
+		(markWithDots)
+		(markList)
 		(markText)
+		(separator)
+		(mark)
+		(text)
+		(options)
+		(literal)
+		(expressionLiteral)
+		(tab)
+		(tokens)
+		(expressionTokens)
+		(rule)
+		(start)
+		(charAdmitted)
+		(condition)
+		(separatorChar)
 		)
 }
 
@@ -65,14 +81,14 @@ void LexicalTokenizer::setMarkTokenDefinition()
 void LexicalTokenizer::setLiteralTokenDefinition()
 {
 	charAdmitted %= no_skip[char_ - lit("$")];
-	tab = ((!eol >> charAdmitted) >> no_skip[string("\t")] >> charAdmitted)[_val += _1 + _2 + _3] | no_skip[lit("\t")];
+	tab = ((!eol >> charAdmitted) >> no_skip[string("\t")] >> charAdmitted)[_val += _1 + _2 + _3] | no_skip[lit("\t") >> *(lit("\t"))[_val += "\t"]];
 	text %= +(!((eol >> lit("end") | lit("["))) >> (tab | escaped_character | charAdmitted));
 	literal = text[_val = new_<Literal>(_1)];
 }
 
 void LexicalTokenizer::setExpressionTokenDefinition()
 {	
-	expressionLiteralText %= no_skip[string("\n")] | no_skip[string("\t")] | +(!(lit("]") | lit("[")) >> charAdmitted);
+	expressionLiteralText %= no_skip[string("\n")] | no_skip[lit("\t") >> string("\t")] | +(!(lit("]") | lit("[")) >> charAdmitted);
 	expressionLiteral = expressionLiteralText[_val = new_<Literal>(_1)];
 	expressionTokens = lit("[") >> +(expressionLiteral | mark)[push_back(_val, _1)] >> lit("]");
 	expression = expressionTokens[_val = new_<Expression>(_1)];
