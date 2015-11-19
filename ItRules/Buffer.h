@@ -9,10 +9,10 @@ class Buffer
 
 	std::string indent(std::string text);
 
-	bool is_string(ItRules::type text);
-	bool is_date(ItRules::type text);
-	bool is_int(ItRules::type text);
-	std::string date_to_string(ItRules::type text);
+	bool is_string(ItRules::type text) const;
+	bool is_date(ItRules::type text) const;
+	bool is_int(ItRules::type text) const;
+	std::string date_to_string(ItRules::type text) const;
 
 public:
 
@@ -21,5 +21,5 @@ public:
 	void write(Buffer* buffer);
 	std::string get_content();
 	void used();
-	bool is_used();
+	bool is_used() const;
 };

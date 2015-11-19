@@ -2,7 +2,7 @@
 #include "TypeFunction.h"
 #include <boost/algorithm/string.hpp>
 #include "SlotFunction.h"
-#include <boost/foreach.hpp>
+#include <algorithm>
 #include "TriggerFunction.h"
 
 
@@ -15,11 +15,10 @@ FunctionStore::FunctionStore()
 
 FunctionStore::~FunctionStore()
 {
-	typedef std::map<std::string, Function*> function_map;
-	BOOST_FOREACH(function_map::value_type &value, this->map)
+	for_each(this->map.begin(), this->map.end(), [](std::pair<std::string, Function*> function_pair)
 	{
-		delete value.second;
-	}
+		delete function_pair.second;
+	});
 }
 
 

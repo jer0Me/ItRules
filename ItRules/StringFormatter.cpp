@@ -1,7 +1,6 @@
 ﻿#include "StringFormatter.h"
 #include <boost/variant/get.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
 
 
 StringFormatter::StringFormatter()
@@ -12,11 +11,10 @@ StringFormatter::StringFormatter()
 
 StringFormatter::~StringFormatter()
 {
-	typedef std::map<std::string, Formatter*> string_formatter_map;
-	BOOST_FOREACH(string_formatter_map::value_type &value, this->map)
+	for_each(this->map.begin(), this->map.end(), [](std::pair<std::string, Formatter*> formatter)
 	{
-		delete value.second;
-	}
+		delete formatter.second;
+	});
 }
 
 

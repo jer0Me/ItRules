@@ -11,11 +11,10 @@ DateFormatter::DateFormatter()
 
 DateFormatter::~DateFormatter()
 {
-	typedef std::map<std::string, Formatter*> date_formatter_map;
-	BOOST_FOREACH(date_formatter_map::value_type &value, this->map)
+	for_each(this->map.begin(), this->map.end(), [](std::pair<std::string, Formatter*> formatter)
 	{
-		delete value.second;
-	}
+		delete formatter.second;
+	});
 }
 
 Formatter* DateFormatter::year()

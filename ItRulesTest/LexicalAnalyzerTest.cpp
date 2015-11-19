@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "LexicalAnalyzer.h"
 #include "Mark.h"
+#include <Literal.h>
 
 TEST(LexicalAnalyzer, testSimpleRule)
 {
@@ -26,6 +27,25 @@ TEST(LexicalAnalyzer, testRuleWithMarksAndOptions)
 	ASSERT_EQ("type", condition->get_name());
 	ASSERT_EQ("person", condition->getParameter());
 
+}
+
+TEST(LexicalAnalyzer, testMultiplesRuleWithTypeAndTriggerFunction)
+{
+	std::string const input = "def type(Person)\n\t$Name has $PetsCount+Letters pets:\n\t* $Pets...[$NL]\nend"
+		"\n\ndef type(Dog)\n\t$Name, a $Age dog\nend\n\ndef type(Cat)\n\t$Name, a $Age kitty\nend\n\n"
+		"def trigger(Age) one()\n\tone year old\nend\n\ndef trigger(Age)\n\t$value+Letters years old\nend";
+
+	LexicalAnalyzer analyzer;
+	auto rules = analyzer.analyze(input);
+	auto rule = *(++++++++rules.begin());
+	auto condition = *rule->get_conditions().begin();
+	ASSERT_EQ("trigger", condition->get_name());
+	ASSERT_EQ("Age", condition->getParameter());
+	auto tokens = rule->get_tokens();
+	auto token = dynamic_cast<Mark*>(*tokens.begin());
+	ASSERT_EQ("value", token->get_name());
+	auto literal = dynamic_cast<Literal*>(*++tokens.begin());
+	ASSERT_EQ(" years old", literal->get_text());
 }
 /*
  TEST(LexicalAnalyzer, testRuleWithEscapedCharacter)

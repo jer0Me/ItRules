@@ -21,8 +21,9 @@ using boost::date_time::Jul;
 		->add_frame("name", "Pau Gasol")
 		->add_frame("birthday", date(1980, Jul, 06))
 		->add_frame("country","spain");
-
 	ASSERT_EQ("body", template_engine->render(frame));
+	delete frame;
+	delete template_engine;
 }
 
 
@@ -40,13 +41,15 @@ TEST(TemplateEngine, testRuleWithMultipleMarksAndOption)
 	->add_frame("country","spain");
 
 	ASSERT_EQ("Pau Gasol was born in Spain in 1980", template_engine->render(frame));
+	delete frame;
+	delete template_engine;
 }
 */
 TEST(TemplateEngine, testMultiValue)
 {
 	std::string const input = "def type(Person)\n\t$Name has $PetsCount+Letters pets:\n\t* $Pets...[$NL]\nend"
 		"\n\ndef type(Dog)\n\t$Name, a $Age dog\nend\n\ndef type(Cat)\n\t$Name, a $Age kitty\nend\n\n"
-		"def trigger(Age) one()\n\tone year old\nend\n\ndef trigger(Age)\n\t$value+Letters years old\nend";
+		"\n\ndef trigger(Age)\n\t$value years old\nend";
 	LexicalAnalyzer analyzer;
 	auto* template_engine = new TemplateEngine();
 	template_engine->add(analyzer.analyze(input));
@@ -73,7 +76,7 @@ TEST(TemplateEngine, testMultiValue)
 		}
 	};
 
-	template_engine->add("one", new one());
+
 
 	Frame* ruffo = new Frame();
 	ruffo->add_types({"dog","pet","object"})
@@ -98,7 +101,11 @@ TEST(TemplateEngine, testMultiValue)
 	
 	ASSERT_EQ("Roger Dickens has 3 pets:\n"
 		"* Ruffo, a 5 years old dog\n"
-		"Missy, a one year old kitty\n"
+		"Missy, a 1 years old kitty\n"
 		"Toby, a 3 years old dog", template_engine->render(frame));
+
+	
+	delete frame;
+	delete template_engine;
 
 }

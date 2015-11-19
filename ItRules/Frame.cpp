@@ -9,6 +9,8 @@ Frame::Frame()
 	this->slots = SlotMap();
 }
 
+Frame::~Frame(){}
+
 
 Frame * Frame::add_types(std::initializer_list<std::string> types)
 {

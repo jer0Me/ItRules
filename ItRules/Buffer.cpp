@@ -36,7 +36,7 @@ void Buffer::used()
 	this->replaced = true;
 }
 
-bool Buffer::is_used()
+bool Buffer::is_used() const
 {
 	return this->replaced;
 }
@@ -51,13 +51,13 @@ void Buffer::write(Buffer* buffer)
 	write(buffer->get_content());
 }
 
-std::string Buffer::date_to_string(ItRules::type text)
+std::string Buffer::date_to_string(ItRules::type text) const
 {
 	return boost::gregorian::to_simple_string(boost::get<boost::gregorian::date>(text));
 }
 
 
-bool Buffer::is_string(ItRules::type text)
+bool Buffer::is_string(ItRules::type text) const
 {
 	try
 	{
@@ -70,7 +70,7 @@ bool Buffer::is_string(ItRules::type text)
 	}
 }
 
-bool Buffer::is_date(ItRules::type text)
+bool Buffer::is_date(ItRules::type text) const
 {
 	try
 	{
@@ -83,7 +83,7 @@ bool Buffer::is_date(ItRules::type text)
 	}
 }
 
-bool Buffer::is_int(ItRules::type text)
+bool Buffer::is_int(ItRules::type text) const
 {
 	try
 	{

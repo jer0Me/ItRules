@@ -1,5 +1,4 @@
 ﻿#include "CompositeMark.h"
-#include <boost/algorithm/string/join.hpp>
 
 CompositeMark::CompositeMark(AbstractMark* mark, std::vector<std::string> options) : DelegateMark(mark), options(options) {}
 

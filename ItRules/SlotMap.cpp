@@ -1,6 +1,23 @@
 ﻿#include "SlotMap.h"
 #include <boost/algorithm/string.hpp>
 
+
+SlotMap::~SlotMap()
+{
+	for_each(this->slots.begin(), this->slots.end(), [this](std::pair<std::string,std::list<AbstractFrame*>> slot)
+	{
+		delete_abstract_frame_list(slot.second);
+	});
+}
+
+void SlotMap::delete_abstract_frame_list(std::list<AbstractFrame*> list)
+{
+	for_each(list.begin(), list.end(), [](AbstractFrame* abstract_frame)
+	{
+		delete abstract_frame;
+	});
+}
+
 std::list<AbstractFrame*>& SlotMap::at(std::string key)
 {
 	boost::to_lower(key);

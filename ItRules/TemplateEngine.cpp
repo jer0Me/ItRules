@@ -3,9 +3,10 @@
 #include "CompositeMark.h"
 #include "NonFormattingMark.h"
 #include "PrimitiveFrame.h"
-#include <boost/foreach.hpp>
 #include <boost/variant/get.hpp>
 #include <boost/algorithm/string.hpp>
+#include <iostream>
+#include <boost/foreach.hpp>
 
 TemplateEngine::TemplateEngine()
 {
@@ -17,7 +18,17 @@ TemplateEngine::~TemplateEngine()
 {
 	delete this->function_store;
 	delete this->formatter_store;
+	delete_ruleset();
 	delete_buffer();
+}
+
+void TemplateEngine::delete_ruleset()
+{
+	for_each(this->rules.begin(), this->rules.end(), [](Rule* rule)
+	{
+		delete rule;
+	});
+	this->rules.clear();
 }
 
 void TemplateEngine::delete_buffer()
@@ -25,25 +36,26 @@ void TemplateEngine::delete_buffer()
 	while (!this->buffers.empty())
 	{
 		auto* buffer = this->buffers.top();
-		delete(buffer);
+		delete buffer;
 		this->buffers.pop();
 	}
 }
 
-TemplateEngine* TemplateEngine::add(std::list<Rule*> rules)
+TemplateEngine* TemplateEngine::add(std::list<Rule*> list)
 {
-	BOOST_FOREACH(Rule* rule, rules)
+	for_each(list.begin(), list.end(), [this](Rule* rule)
 	{
-		ruleSet.insert(rule);
-	}
+		rules.push_back(rule);
+	});
+
 	return this;
 }
 
 std::string TemplateEngine::render(AbstractFrame* frame)
 {
 	initBuffer();
-	auto* mark = new Mark("root");
-	auto* trigger = new Trigger(frame, mark);
+	auto mark = new Mark("root");
+	auto trigger = new Trigger(frame, mark);
 	execute(trigger);
 	delete(mark);
 	delete(trigger);
@@ -68,16 +80,20 @@ void TemplateEngine::pushBuffer(std::string indentation)
 
 bool TemplateEngine::execute(Trigger* trigger)
 {
-	auto* rule = ruleFor(trigger);
+	auto rule = ruleFor(trigger);
+
 	return rule->is_initiated() && execute(trigger, rule);
 }
 
 bool TemplateEngine::execute(Trigger* trigger, Rule* rule)
 {
-	bool result;
-	BOOST_FOREACH(Token* token, rule->get_tokens()) {
-		result = execute(trigger, token);
-	}
+	auto tokens = rule->get_tokens();
+
+	for_each(tokens.begin(), tokens.end(), [this,trigger](Token* token)
+	{
+		execute(trigger, token);
+	});
+
 	return true;		
 }
 
@@ -93,7 +109,7 @@ bool TemplateEngine::execute(Trigger* trigger, AbstractMark* mark)
 	return render_frame(trigger->get_frame(), compose_mark(trigger, mark));
 }
 
-AbstractMark* TemplateEngine::compose_mark(Trigger* trigger, AbstractMark* mark)
+AbstractMark* TemplateEngine::compose_mark(Trigger* trigger, AbstractMark* mark) const
 {
 	return trigger->get_frame()->is_primitive() ? new CompositeMark(mark, trigger->get_mark()->get_options()) : mark;
 }
@@ -105,20 +121,23 @@ bool TemplateEngine::render_frame(AbstractFrame* frame, AbstractMark* mark)
 
 bool TemplateEngine::render_composite_frame(AbstractFrame* frame, AbstractMark* mark)
 {
-	std::list<AbstractFrame*> frames = frame->get_frames(mark->get_name());
+	auto frames = frame->get_frames(mark->get_name());
 	return frames.size() != 0 && render_frames(frames, mark);
 }
 
 bool TemplateEngine::render_frames(std::list<AbstractFrame*> frames, AbstractMark* mark)
 {
 	auto rendered = false;
-	BOOST_FOREACH(AbstractFrame* frame, frames)
+	AbstractMark* non_formatting_mark = nullptr;
+	for_each(frames.begin(), frames.end(), [this, &rendered, mark, &non_formatting_mark](AbstractFrame* abstract_frame)
 	{
 		pushBuffer(mark->get_indentation());
 		if (rendered && mark->is_multiple()) write_separator(mark);
-		rendered = rendered | trigger(format(frame, mark), new NonFormattingMark(mark, this->formatter_store));
+		non_formatting_mark = new NonFormattingMark(mark, this->formatter_store);
+		rendered = rendered | trigger(format(abstract_frame, mark), non_formatting_mark);
 		pop_buffer();
-	}
+		delete non_formatting_mark;
+	});
 	
 	return rendered;
 }
@@ -138,9 +157,10 @@ bool TemplateEngine::pop_buffer()
 
 bool TemplateEngine::trigger(ItRules::type value, AbstractMark* mark)
 {
-	auto trigger = new Trigger(frame(value), mark);
+	auto* trigger = new Trigger(frame(value), mark);
 	if (!execute(trigger)) return false;
 	buffers.top()->used();
+	delete trigger;
 	return true;
 }
 
@@ -171,7 +191,7 @@ ItRules::type TemplateEngine::format(ItRules::type value, AbstractMark* mark)
 	ItRules::type result = NULL;
 	if (is_primitive_frame(value))
 	{
-		PrimitiveFrame* primitive_frame = dynamic_cast<PrimitiveFrame*>(boost::get<AbstractFrame*>(value));
+		auto primitive_frame = dynamic_cast<PrimitiveFrame*>(boost::get<AbstractFrame*>(value));
 		result = primitive_frame->get_value();
 	}
 	else
@@ -182,10 +202,12 @@ ItRules::type TemplateEngine::format(ItRules::type value, AbstractMark* mark)
 		}
 	}
 		
-	BOOST_FOREACH(std::string option, mark->get_options())
+	auto options = mark->get_options();
+	for_each(options.begin(), options.end(), [this, &result](std::string option)
 	{
 		result = format(result, formatter_store->get(option));
-	}
+	});
+
 	return result;
 }
 
@@ -202,12 +224,13 @@ void TemplateEngine::write(ItRules::type text)
 
 bool TemplateEngine::render_primitive_frame(AbstractFrame* frame, AbstractMark* mark)
 {
-	std::string markName = mark->get_name();
-	boost::to_lower(markName);
-	if (markName.compare("value") != 0) return false;
+	std::string mark_name = mark->get_name();
+	boost::to_lower(mark_name);
+	if (mark_name.compare("value") != 0) return false;
 	write(format(frame, mark));
 	Buffer* buffer = this->buffers.top();
 	buffer->used();
+	delete mark;
 	return true;
 }
 
@@ -215,7 +238,7 @@ bool TemplateEngine::is_abstract_mark(Token* token)
 {
 	try
 	{
-		AbstractMark* abstractMark = dynamic_cast<AbstractMark *> (token);
+		auto abstractMark = dynamic_cast<AbstractMark *> (token);
 		return abstractMark != nullptr;
 	} 
 	catch (std::exception exception) 
@@ -227,22 +250,35 @@ bool TemplateEngine::is_abstract_mark(Token* token)
 
 Rule* TemplateEngine::ruleFor(Trigger* trigger)
 {
-	BOOST_FOREACH(Rule* rule, ruleSet)
+	Rule* result = nullptr;
+	for_each(this->rules.begin(), this->rules.end(), [this, trigger, &result](Rule* rule)
 	{
-		if (match(rule, trigger)) {
-			return rule;
+		if(result == nullptr)
+		{
+			if (match(rule, trigger)) {
+				result = rule;
+			}
 		}
-	}
-	return nullptr;
+	});
+	return result;
 }
 
 bool TemplateEngine::match(Rule* rule, Trigger* trigger)
 {
-	BOOST_FOREACH(Condition* condition, rule->get_conditions())
+	auto conditions = rule->get_conditions();
+	auto result = true;
+	for_each(conditions.begin(), conditions.end(), [this, trigger, &result](Condition* condition)
 	{
-		if (!conditionMatchTrigger(trigger, condition)) return false;
-	}
-	return true;
+		if(result)
+		{
+			if (!conditionMatchTrigger(trigger, condition)) {
+				result = false;
+			};
+		}
+		
+	});
+
+	return result;
 }
 
 bool TemplateEngine::conditionMatchTrigger(Trigger* trigger, Condition* condition)

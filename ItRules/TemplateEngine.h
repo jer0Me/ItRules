@@ -8,12 +8,11 @@
 #include "FunctionStore.h"
 #include "Formatter.h"
 #include "FormatterStore.h"
-#include "ItRules.h"
 
 
 class TemplateEngine
 {
-	std::set<Rule*> ruleSet;
+	std::list<Rule*> rules;
 	std::stack<Buffer*> buffers;
 	FunctionStore* function_store;
 	FormatterStore* formatter_store;
@@ -21,6 +20,8 @@ class TemplateEngine
 	void initBuffer();
 
 	void delete_buffer();
+	
+	void delete_ruleset();
 
 	void pushBuffer(std::string indentation);
 
@@ -60,19 +61,15 @@ class TemplateEngine
 
 	bool trigger(ItRules::type value, AbstractMark* mark);
 
-	bool is_primitive_frame(AbstractFrame* frame);
-
 	bool is_primitive_frame(ItRules::type value);
 
 	bool is_abstract_frame(ItRules::type value);
-
-	AbstractMark* non_formatting_mark(AbstractMark* mark);
 
 	bool pop_buffer();
 
 	std::string document_of(Buffer* buffer);
 
-	AbstractMark* compose_mark(Trigger* trigger, AbstractMark* mark);
+	AbstractMark* compose_mark(Trigger* trigger, AbstractMark* mark) const;
 public:
 	TemplateEngine();
 

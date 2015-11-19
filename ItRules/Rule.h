@@ -9,18 +9,23 @@ class Rule : public Token
 	std::list<Token*> tokens;
 	bool initiated = false;
 
+	void delete_conditions();
+	void delete_tokens();
+
 public:
 
 	Rule(std::list<Condition*> conditions, std::list<Token*> tokens);
+
+	~Rule();
 
 	void set_rule(std::list<Condition*> conditions, std::list<Token*> tokens);
 
 	bool operator<(const Rule &rule) const;
 
-	std::list<Condition*>& get_conditions();
+	std::list<Condition*> get_conditions();
 
 	bool is_initiated() const;
 
-	std::list<Token*>& get_tokens();
+	std::list<Token*> get_tokens();
 
 };

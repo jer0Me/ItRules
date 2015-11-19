@@ -13,6 +13,8 @@ public:
 
 	Frame();
 
+	~Frame();
+
 	Frame* add_types(std::initializer_list<std::string> types);
 
 	Frame* add_frame(std::string slot, ItRules::type value);
