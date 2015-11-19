@@ -1,5 +1,6 @@
 ﻿#include <algorithm>
 #include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
 #include "Mark.h"
 #include "Literal.h"
 
@@ -58,7 +59,7 @@ std::string Mark::indent_of(Token* token)
 
 std::string Mark::text_of(Token* token)
 {
-	return is_literal(token) ? dynamic_cast<Literal*> (token)->get_text() : "";
+	return is_literal(token) ? extract_indent(dynamic_cast<Literal*> (token)->get_text()) : "";
 }
 
 bool Mark::is_literal(Token* token)
@@ -70,4 +71,17 @@ bool Mark::is_literal(Token* token)
 std::string Mark::to_string()
 {
 	return this->name;
+}
+
+std::string Mark::extract_indent(std::string text)
+{
+	if(text.find("\n"))
+	{
+		boost::regex re("^\\s");        // Create the reg exp
+		boost::sregex_token_iterator         // Create an iterator using a
+			p(text.begin(), text.end(), re, -1);  // sequence and that reg exp
+		boost::sregex_token_iterator end;    
+		return *p;
+	}
+	return "";
 }
