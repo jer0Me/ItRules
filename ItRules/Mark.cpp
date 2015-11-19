@@ -77,11 +77,10 @@ std::string Mark::extract_indent(std::string text)
 {
 	if(text.find("\n"))
 	{
-		boost::regex re("^\\s");        // Create the reg exp
-		boost::sregex_token_iterator         // Create an iterator using a
-			p(text.begin(), text.end(), re, -1);  // sequence and that reg exp
-		boost::sregex_token_iterator end;    
-		return *p;
+		std::string substring = text.substr(text.rfind("\n") + 1);
+		boost::regex re("\\S");       
+		boost::sregex_token_iterator result(substring.begin(), substring.end(), re, -1);  
+		return *result;
 	}
 	return "";
 }
