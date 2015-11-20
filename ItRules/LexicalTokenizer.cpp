@@ -82,7 +82,7 @@ void LexicalTokenizer::setLiteralTokenDefinition()
 {
 	charAdmitted %= no_skip[char_ - lit("$")];
 	tab %= no_skip[lit("\t") >> *string("\t")];
-	text %= +(!((eol >> lit("end") | lit("["))) >> (tab | escaped_character | charAdmitted));
+	text %= +(!((eol >> lit("end") | no_skip[lit("[")])) >> (tab | escaped_character | charAdmitted));
 	literal = text[_val = new_<Literal>(_1)];
 }
 

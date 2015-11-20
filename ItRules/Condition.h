@@ -8,6 +8,7 @@ class Condition
 	bool negated;
 
 public:
+	Condition(std::string name, std::string parameter);
 	Condition(std::string name, std::string parameter, bool negated);
 
 	std::string get_name();

@@ -156,6 +156,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LexicalAnalyzerTest.cpp" />
+    <ClCompile Include="ItRulesTest.cpp" />
+    <ClCompile Include="RuleFixtures.cpp" />
     <ClCompile Include="TemplateEngineTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +167,9 @@
     <ProjectReference Include="..\ItRules\ItRules.vcxproj">
       <Project>{c072d8e6-63bf-4444-a6ae-98d489dfbdb1}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RuleFixtures.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

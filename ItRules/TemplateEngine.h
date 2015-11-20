@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Rule.h"
-#include <set>
 #include <stack>
 #include "AbstractFrame.h"
 #include "Buffer.h"
@@ -9,6 +8,8 @@
 #include "Formatter.h"
 #include "FormatterStore.h"
 #include "Expression.h"
+#include "LexicalAnalyzer.h"
+
 
 
 class TemplateEngine
@@ -17,6 +18,7 @@ class TemplateEngine
 	std::stack<Buffer*> buffers;
 	FunctionStore* function_store;
 	FormatterStore* formatter_store;
+	LexicalAnalyzer* lexical_analyzer;
 
 	void initBuffer();
 
@@ -77,6 +79,8 @@ class TemplateEngine
 	std::string document_of(Buffer* buffer);
 
 	AbstractMark* compose_mark(Trigger* trigger, AbstractMark* mark) const;
+
+	void generate_rules(std::string input);
 public:
 	TemplateEngine();
 
@@ -87,6 +91,10 @@ public:
 	TemplateEngine* add(std::string name, Function* function);
 
 	std::string render(AbstractFrame* frame);
+
+	TemplateEngine* use(std::string pathname);
+
+	TemplateEngine* use(std::ifstream& source);
 
 
 };

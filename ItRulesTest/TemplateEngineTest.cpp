@@ -108,17 +108,26 @@ TEST(TemplateEngine, testCustomFormatter)
 
 TEST(TemplateEngine, testRecursiveRule)
 {
-	std::string const input = "def type(Module)\n\t<module name=\"$name\">[\n"
+	std::string const input = "def type(Module)\n\t<module name=$name [type=$type]>[\n"
 		"\t\t$modules...[$NL]\n\t]</module>\nend";
 
 	LexicalAnalyzer analyzer;
 	auto* template_engine = new TemplateEngine();
 	template_engine->add(analyzer.analyze(input));
 
+	auto first_one_one_level = new Frame();
+	first_one_one_level->add_types({ "module","object" })
+		->add_frame("name", "1.1.1")
+		->add_frame("type", "last level")
+		->add_frame("modulescount", 1);
+
 	auto first_one_level = new Frame();
 	first_one_level->add_types({ "module","object" })
 		->add_frame("name", "1.1")
-		->add_frame("modulescount", 1);
+		->add_frame("modulescount", 1)
+		->add_frame("modules",first_one_one_level);
+
+
 
 	auto first_two_level = new Frame();
 	first_two_level->add_types({ "module","object" })
@@ -133,6 +142,8 @@ TEST(TemplateEngine, testRecursiveRule)
 			first_one_level, first_two_level
 		});
 
+	
+
 	auto root= new Frame();
 	root->add_types({ "module","object" })
 		->add_frame("name", "X")
@@ -143,5 +154,11 @@ TEST(TemplateEngine, testRecursiveRule)
 
 	std::string result = template_engine->render(root);
 	std::cout << result;
-	
+
+}
+
+
+TEST(TemplateEngine, should_render_an_integer)
+{
+	auto template_engine = new TemplateEngine();
 }

@@ -5,13 +5,16 @@
 #include "PrimitiveFrame.h"
 #include <boost/variant/get.hpp>
 #include <boost/algorithm/string.hpp>
+#include <fstream>
 #include <iostream>
 #include <boost/foreach.hpp>
+#include <sstream>
 
 TemplateEngine::TemplateEngine()
 {
 	this->function_store = new FunctionStore();
 	this->formatter_store = new FormatterStore();
+	this->lexical_analyzer = new LexicalAnalyzer();
 }
 
 TemplateEngine::~TemplateEngine()
@@ -39,6 +42,41 @@ void TemplateEngine::delete_buffer()
 		delete buffer;
 		this->buffers.pop();
 	}
+}
+
+TemplateEngine* TemplateEngine::use(std::string pathname)
+{
+	std::ifstream source(pathname);
+	use(source);
+	source.close();
+	return this;
+}
+
+
+TemplateEngine* TemplateEngine::use(std::ifstream& source)
+{
+	std::vector<std::string> v;
+
+	std::string line;
+	std::string rules;
+
+	while (std::getline(source, line))
+	{
+		std::istringstream is(line);
+		std::string s;
+		std::getline(is, s);
+		s.find("\t");
+		rules += s;
+	}
+
+	generate_rules(rules);
+	
+	return this;
+}
+
+void TemplateEngine::generate_rules(std::string input)
+{
+	add(lexical_analyzer->analyze(input));
 }
 
 TemplateEngine* TemplateEngine::add(std::list<Rule*> list)

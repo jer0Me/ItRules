@@ -1,10 +1,11 @@
 #include "Rule.h"
 #include <algorithm>
+#include <boost/foreach.hpp>
 
-Rule::Rule(std::list<Condition*> conditions, std::list<Token*> tokens) : conditions(conditions), tokens(tokens)
-{
-	this->initiated = true;
-}
+Rule::Rule(){}
+
+Rule::Rule(std::list<Condition*> conditions, std::list<Token*> tokens) : conditions(conditions), tokens(tokens){}
+
 
 Rule::~Rule()
 {
@@ -28,13 +29,10 @@ void Rule::delete_tokens()
 	});
 }
 
-
-
 void Rule::set_rule(std::list<Condition*> conditions, std::list<Token*> tokens)
 {
 	this->conditions = conditions;
 	this->tokens = tokens;
-	this->initiated = true;
 }
 
 bool Rule::operator < (const Rule& rule) const
@@ -47,18 +45,37 @@ std::list<Condition*> Rule::get_conditions()
 	return this->conditions;
 }
 
-bool Rule::is_initiated() const
-{
-	return initiated;
-}
-
 std::list<Token*> Rule::get_tokens()
 {
 	return tokens;
 }
 
+Rule* Rule::add(Condition* condition)
+{
+	this->conditions.push_back(condition);
+	return this;
+}
 
+Rule* Rule::add(std::initializer_list<Condition*> conditions)
+{
+	BOOST_FOREACH(Condition* condition, conditions)
+	{
+		this->conditions.push_back(condition);
+	}
+	return this;
+}
 
+Rule* Rule::add(Token* token)
+{
+	this->tokens.push_back(token);
+	return this;
+}
 
-
-
+Rule* Rule::add(std::initializer_list<Token*> tokens)
+{
+	BOOST_FOREACH(Token* token, tokens)
+	{
+		this->tokens.push_back(token);
+	}
+	return this;
+}

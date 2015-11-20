@@ -2,6 +2,10 @@
 
 Condition::Condition(std::string name, std::string parameter, bool negated) : name(name), parameter(parameter), negated(negated) {}
 
+Condition::Condition(std::string name, std::string parameter) : name(name), parameter(name)
+{
+	this->negated = false;
+}
 
 std::string Condition::get_name()
 {
