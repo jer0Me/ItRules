@@ -155,9 +155,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FormatterStoreTest.cpp" />
     <ClCompile Include="LexicalAnalyzerTest.cpp" />
     <ClCompile Include="ItRulesTest.cpp" />
-    <ClCompile Include="RuleFixtures.cpp" />
+    <ClCompile Include="TemplateEngineFixtures.cpp" />
     <ClCompile Include="TemplateEngineTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +170,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RuleFixtures.h" />
+    <ClInclude Include="TemplateEngineFixtures.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

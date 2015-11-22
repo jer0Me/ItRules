@@ -8,14 +8,17 @@ FormatterStore::FormatterStore()
 {
 	this->string_formatter = new StringFormatter();
 	this->date_formatter = new DateFormatter();
+	this->number_formatter = new NumberFormatter();
 	this->map.insert(string_formatter->get().begin(), string_formatter->get().end());
 	this->map.insert(date_formatter->get().begin(), date_formatter->get().end());
+	this->map.insert(number_formatter->get().begin(), number_formatter->get().end());
 }
 
 FormatterStore::~FormatterStore()
 {
 	delete string_formatter;
 	delete date_formatter;
+	delete number_formatter;
 }
 
 

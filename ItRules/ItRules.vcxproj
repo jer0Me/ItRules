@@ -26,6 +26,7 @@
     <ClInclude Include="Condition.h" />
     <ClInclude Include="DateFormatter.h" />
     <ClInclude Include="DelegateMark.h" />
+    <ClInclude Include="EnglishSpelling.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Formatter.h" />
     <ClInclude Include="FormatterStore.h" />
@@ -34,6 +35,8 @@
     <ClInclude Include="FunctionStore.h" />
     <ClInclude Include="ItRules.h" />
     <ClInclude Include="NonFormattingMark.h" />
+    <ClInclude Include="NumberFormatter.h" />
+    <ClInclude Include="NumberSpellingFormatter.h" />
     <ClInclude Include="SlotFunction.h" />
     <ClInclude Include="SlotMap.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
@@ -50,6 +53,7 @@
     <ClInclude Include="TriggerFunction.h" />
     <ClInclude Include="TypeFunction.h" />
     <ClInclude Include="TypeSet.h" />
+    <ClInclude Include="WordSpelling.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractFrame.cpp" />
@@ -59,6 +63,7 @@
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="DateFormatter.cpp" />
     <ClCompile Include="DelegateMark.cpp" />
+    <ClCompile Include="EnglishSpelling.cpp" />
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Formatter.cpp" />
     <ClCompile Include="FormatterStore.cpp" />
@@ -66,6 +71,8 @@
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="FunctionStore.cpp" />
     <ClCompile Include="NonFormattingMark.cpp" />
+    <ClCompile Include="NumberFormatter.cpp" />
+    <ClCompile Include="NumberSpellingFormatter.cpp" />
     <ClCompile Include="SlotFunction.cpp" />
     <ClCompile Include="SlotMap.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
@@ -82,6 +89,7 @@
     <ClCompile Include="TriggerFunction.cpp" />
     <ClCompile Include="TypeFunction.cpp" />
     <ClCompile Include="TypeSet.cpp" />
+    <ClCompile Include="WordSpelling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

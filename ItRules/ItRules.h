@@ -4,5 +4,6 @@
 
 namespace ItRules
 {
-	typedef boost::variant<int, std::string, AbstractFrame*, boost::gregorian::date> type;
+	typedef boost::variant<int, std::string, AbstractFrame*, boost::gregorian::date, double> type;
 }
+

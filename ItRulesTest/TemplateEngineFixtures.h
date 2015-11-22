@@ -1,8 +1,12 @@
 #pragma once
 #include <Rule.h>
+#include <Frame.h>
 
-class RuleFixtures
+class TemplateEngineFixtures
 {
+	
+public:
+	Frame* person();
 	Rule* person_rule() const;
 	Rule* person_rule_with_mark_in_dirty_line() const;
 	Rule* person_rule_with_expressions() const;

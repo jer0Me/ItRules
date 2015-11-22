@@ -1,10 +1,25 @@
-#include "RuleFixtures.h"
 #include <Mark.h>
 #include <Literal.h>
 #include <Expression.h>
+#include <TemplateEngine.h>
+#include <Frame.h>
+#include "TemplateEngineFixtures.h"
 
 
-Rule* RuleFixtures::person_rule() const
+Frame* TemplateEngineFixtures::person()
+{
+
+	auto person = new Frame();
+	person->add_types({"person","object" })
+		->add_frame("name", "Pau Gasol")
+		->add_frame("birthday", boost::gregorian::date(1980, boost::date_time::Jul, 6))
+		->add_frame("country", "Spain");
+	return person;
+}
+
+
+
+Rule* TemplateEngineFixtures::person_rule() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("type", "Person"))
@@ -12,7 +27,7 @@ Rule* RuleFixtures::person_rule() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_mark_in_dirty_line() const
+Rule* TemplateEngineFixtures::person_rule_with_mark_in_dirty_line() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("type", "Person"))
@@ -20,7 +35,7 @@ Rule* RuleFixtures::person_rule_with_mark_in_dirty_line() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_expressions() const
+Rule* TemplateEngineFixtures::person_rule_with_expressions() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("type", "Person"))
@@ -28,7 +43,7 @@ Rule* RuleFixtures::person_rule_with_expressions() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_sex() const
+Rule* TemplateEngineFixtures::person_rule_with_sex() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("type", "Person"))
@@ -36,7 +51,7 @@ Rule* RuleFixtures::person_rule_with_sex() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_uppercase() const
+Rule* TemplateEngineFixtures::person_rule_uppercase() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("TYPE", "PERSON"))
@@ -44,7 +59,7 @@ Rule* RuleFixtures::person_rule_uppercase() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_date_format_on_string() const
+Rule* TemplateEngineFixtures::person_rule_with_date_format_on_string() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Type", "Person"))
@@ -53,7 +68,7 @@ Rule* RuleFixtures::person_rule_with_date_format_on_string() const
 }
 
 
-Rule* RuleFixtures::person_rule_with_double_format_on_string() const
+Rule* TemplateEngineFixtures::person_rule_with_double_format_on_string() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Type", "Person"))
@@ -61,7 +76,7 @@ Rule* RuleFixtures::person_rule_with_double_format_on_string() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_two_formats() const
+Rule* TemplateEngineFixtures::person_rule_with_two_formats() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Type", "Person"))
@@ -69,7 +84,7 @@ Rule* RuleFixtures::person_rule_with_two_formats() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_format_marks() const
+Rule* TemplateEngineFixtures::person_rule_with_format_marks() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Type", "Person"))
@@ -77,7 +92,7 @@ Rule* RuleFixtures::person_rule_with_format_marks() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_custom_condition() const
+Rule* TemplateEngineFixtures::person_rule_with_custom_condition() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Custom", "Gasol"))
@@ -85,7 +100,7 @@ Rule* RuleFixtures::person_rule_with_custom_condition() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_custom_format() const
+Rule* TemplateEngineFixtures::person_rule_with_custom_format() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Type", "Person"))
@@ -93,7 +108,7 @@ Rule* RuleFixtures::person_rule_with_custom_format() const
 	return rule;
 }
 
-Rule* RuleFixtures::person_rule_with_or_expressions() const
+Rule* TemplateEngineFixtures::person_rule_with_or_expressions() const
 {
 	auto first_expression = new Expression({ new Literal("..."), new Mark("Nothing"), new Literal("...") });
 	auto second_expression = new Expression({ new Literal("..."), new Mark("Empty") });

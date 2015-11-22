@@ -26,6 +26,8 @@ class TemplateEngine
 	
 	void delete_ruleset();
 
+	void add_slot_rule();
+
 	void pushBuffer(std::string indentation);
 
 	bool execute(Trigger* trigger);
@@ -81,6 +83,7 @@ class TemplateEngine
 	AbstractMark* compose_mark(Trigger* trigger, AbstractMark* mark) const;
 
 	void generate_rules(std::string input);
+
 public:
 	TemplateEngine();
 

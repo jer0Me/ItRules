@@ -27,12 +27,15 @@
     <ClCompile Include="ItRulesTest.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="RuleFixtures.cpp">
+    <ClCompile Include="TemplateEngineFixtures.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="FormatterStoreTest.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RuleFixtures.h">
+    <ClInclude Include="TemplateEngineFixtures.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

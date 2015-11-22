@@ -2,7 +2,7 @@
 
 Condition::Condition(std::string name, std::string parameter, bool negated) : name(name), parameter(parameter), negated(negated) {}
 
-Condition::Condition(std::string name, std::string parameter) : name(name), parameter(name)
+Condition::Condition(std::string name, std::string parameter) : name(name), parameter(parameter)
 {
 	this->negated = false;
 }

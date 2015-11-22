@@ -5,6 +5,7 @@
 #include <Frame.h>
 #include <boost/date_time/gregorian/greg_date.hpp>
 #include <boost/variant/get.hpp>
+#include "TemplateEngineFixtures.h"
 
 using boost::gregorian::date;
 using boost::date_time::Jul;
@@ -158,7 +159,10 @@ TEST(TemplateEngine, testRecursiveRule)
 }
 
 
-TEST(TemplateEngine, should_render_an_integer)
+TEST(TemplateEngine, should_render_person_defining_a_rule)
 {
 	auto template_engine = new TemplateEngine();
+	TemplateEngineFixtures fixtures;
+	template_engine->add({ fixtures.person_rule() });
+	ASSERT_EQ("Pau Gasol was born in Spain on 06/07/1980", template_engine->render(fixtures.person()));
 }

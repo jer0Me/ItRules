@@ -6,6 +6,7 @@ class DateFormatter
 {
 	std::map<std::string, Formatter*> map;
 	Formatter* year();
+	Formatter* short_date();
 
 public:
 

@@ -6,7 +6,6 @@
 #include <boost/variant/get.hpp>
 #include <boost/algorithm/string.hpp>
 #include <fstream>
-#include <iostream>
 #include <boost/foreach.hpp>
 #include <sstream>
 
@@ -43,6 +42,16 @@ void TemplateEngine::delete_buffer()
 		this->buffers.pop();
 	}
 }
+
+void TemplateEngine::add_slot_rule()
+{
+	std::list<Condition*> conditions;
+	conditions.push_back(new Condition("slot", "value", false));
+	std::list<Token*> tokens;
+	tokens.push_back(new Mark("value"));
+	rules.push_back(new Rule(conditions, tokens));
+}
+
 
 TemplateEngine* TemplateEngine::use(std::string pathname)
 {
@@ -85,7 +94,7 @@ TemplateEngine* TemplateEngine::add(std::list<Rule*> list)
 	{
 		rules.push_back(rule);
 	};
-
+	add_slot_rule();
 	return this;
 }
 

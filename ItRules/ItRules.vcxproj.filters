@@ -43,6 +43,18 @@
     <Filter Include="Archivos de encabezado\engine\model">
       <UniqueIdentifier>{a158ef74-d024-4c3f-8fab-138e1218a8c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\kernel">
+      <UniqueIdentifier>{1a1c2e44-c5d0-4a5d-bf91-4e14780ef95e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\kernel">
+      <UniqueIdentifier>{5d782e16-f050-48c2-a3c5-ffd7490c27ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\engine\formatters\spellings">
+      <UniqueIdentifier>{ebfdd2ad-9967-4bf8-9aaa-15f0f7a7e2f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine\formatters\spellings">
+      <UniqueIdentifier>{d021d02d-a969-47f2-81f1-9ce41c6e290c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TemplateEngine.h">
@@ -129,14 +141,26 @@
     <ClInclude Include="DateFormatter.h">
       <Filter>Archivos de encabezado\engine\formatters</Filter>
     </ClInclude>
-    <ClInclude Include="ItRules.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="TypeSet.h">
       <Filter>Archivos de encabezado\engine\model</Filter>
     </ClInclude>
     <ClInclude Include="TriggerFunction.h">
       <Filter>Archivos de encabezado\engine\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="ItRules.h">
+      <Filter>Archivos de encabezado\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberFormatter.h">
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
+    </ClInclude>
+    <ClInclude Include="WordSpelling.h">
+      <Filter>Archivos de encabezado\engine\formatters\spellings</Filter>
+    </ClInclude>
+    <ClInclude Include="EnglishSpelling.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberSpellingFormatter.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +253,18 @@
     </ClCompile>
     <ClCompile Include="TriggerFunction.cpp">
       <Filter>Archivos de código fuente\engine\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberFormatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="WordSpelling.cpp">
+      <Filter>Archivos de código fuente\engine\formatters\spellings</Filter>
+    </ClCompile>
+    <ClCompile Include="EnglishSpelling.cpp">
+      <Filter>Archivos de código fuente\engine\formatters\spellings</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberSpellingFormatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters\spellings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

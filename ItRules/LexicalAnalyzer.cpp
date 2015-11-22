@@ -17,8 +17,6 @@ std::list<Rule*>LexicalAnalyzer::analyze(std::string input)
 
 	qi::phrase_parse(iter, end, lexicalTokenizer, qi::ascii::blank, rules);
 	setRuleTokenPrevious(rules);
-	addSlotRule(rules);
-
 	return rules;
 }
 
@@ -48,16 +46,6 @@ void LexicalAnalyzer::setTokenPrevious(std::list<Token*>& tokens)
 		++iterator;
 	}
 }
-
-void LexicalAnalyzer::addSlotRule(std::list<Rule*>& rules)
-{
-	std::list<Condition*> conditions;
-	conditions.push_back(new Condition("slot","value", false));
-	std::list<Token*> tokens;
-	tokens.push_back(new Mark("value"));
-	rules.push_back(new Rule(conditions, tokens));
-}
-
 
 bool LexicalAnalyzer::is_expression(Token* token)
 {
