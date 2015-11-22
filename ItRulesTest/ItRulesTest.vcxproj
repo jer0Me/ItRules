@@ -160,6 +160,7 @@
     <ClCompile Include="ItRulesTest.cpp" />
     <ClCompile Include="TemplateEngineFixtures.cpp" />
     <ClCompile Include="TemplateEngineTest.cpp" />
+    <ClCompile Include="TypeFunctionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GoogleTest\GoogleTest.vcxproj">
