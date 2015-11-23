@@ -14,6 +14,6 @@ public:
 	std::string get_name();
 	std::string getParameter();
 	
-	bool isNegated();
+	bool is_negated();
 
 };

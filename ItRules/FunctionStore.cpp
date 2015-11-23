@@ -37,10 +37,8 @@ bool FunctionStore::exists(std::string function)
 
 Function* FunctionStore::create_function(Condition* condition)
 {
-
 	auto* function = map.at(boost::to_lower_copy(condition->get_name()));
-	return condition->isNegated() ? negatedFunction(function) : function;
-
+	return condition->is_negated() ? negated_function(function) : function;
 }
 
 Function* FunctionStore::unknown_function(Condition* condition) const
@@ -48,7 +46,7 @@ Function* FunctionStore::unknown_function(Condition* condition) const
 	throw std::runtime_error("Function " + condition->get_name() + " does not exist");
 }
 
-Function* FunctionStore::negatedFunction(Function* function)
+Function* FunctionStore::negated_function(Function* function)
 {
 	class negated : public Function
 	{

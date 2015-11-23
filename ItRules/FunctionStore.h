@@ -10,7 +10,7 @@ class FunctionStore
 	bool exists(std::string function);
 	Function* create_function(Condition* condition);
 	Function* unknown_function(Condition* condition) const;
-	Function* negatedFunction(Function* function);
+	Function* negated_function(Function* function);
 
 public:
 	FunctionStore();

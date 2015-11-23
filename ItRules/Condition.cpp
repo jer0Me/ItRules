@@ -17,7 +17,7 @@ std::string Condition::getParameter()
 	return this->parameter;
 }
 
-bool Condition::isNegated()
+bool Condition::is_negated()
 {
 	return this->negated;
 }
