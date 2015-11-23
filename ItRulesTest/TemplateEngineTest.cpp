@@ -120,15 +120,6 @@ TEST(TemplateEngine, should_render_person_defining_rule_with_a_custom_condition_
 	ASSERT_EQ("Pau Gasol was born in Spain on 06/07/1980", template_engine->render(fixtures.person()));
 }
 
-TEST(TemplateEngine, should_render_person_excluding_a_field)
-{
-	auto template_engine = new TemplateEngine();
-	Fixtures fixtures;
-	template_engine->add({ fixtures.person_rule_with_custom_condition() });
-	template_engine->add("Custom", fixtures.custom_condition_function());
-	ASSERT_EQ("Pau Gasol was born in Spain on 06/07/1980", template_engine->render(fixtures.person()));
-}
-
 
 
 
