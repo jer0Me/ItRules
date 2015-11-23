@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FormatterStoreTest.cpp" />
+    <ClCompile Include="LexicalAnalyzerFixtures.cpp" />
     <ClCompile Include="LexicalAnalyzerTest.cpp" />
     <ClCompile Include="ItRulesTest.cpp" />
     <ClCompile Include="TemplateEngineFixtures.cpp" />
@@ -172,6 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LexicalAnalyzerFixtures.h" />
     <ClInclude Include="TemplateEngineFixtures.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

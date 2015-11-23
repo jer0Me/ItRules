@@ -39,9 +39,15 @@
     <ClCompile Include="TemplateEngineFixtures.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="LexicalAnalyzerFixtures.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TemplateEngineFixtures.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="LexicalAnalyzerFixtures.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

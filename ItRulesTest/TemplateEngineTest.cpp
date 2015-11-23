@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include <TemplateEngine.h>
 #include <boost/date_time/gregorian/greg_date.hpp>
-#include "Fixtures.h"
+#include "TemplateEngineFixtures.h"
 
 using boost::gregorian::date;
 using boost::date_time::Jul;
