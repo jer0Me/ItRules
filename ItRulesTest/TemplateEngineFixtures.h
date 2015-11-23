@@ -2,7 +2,7 @@
 #include <Rule.h>
 #include <Frame.h>
 
-class Fixtures
+class TemplateEngineFixtures
 {
 	
 public:

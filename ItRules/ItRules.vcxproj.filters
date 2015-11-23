@@ -180,11 +180,11 @@
     <ClInclude Include="EnglishPluralInflector.h">
       <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
     </ClInclude>
-    <ClInclude Include="ReplaceString.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="ReplacesMap.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ReplaceString.h">
+      <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,11 +302,11 @@
     <ClCompile Include="NumberFormatter.cpp">
       <Filter>Archivos de código fuente\engine\formatters</Filter>
     </ClCompile>
-    <ClCompile Include="ReplaceString.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="ReplacesMap.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\engine\formatters\inflectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ReplaceString.cpp">
+      <Filter>Archivos de código fuente\engine\formatters\inflectors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

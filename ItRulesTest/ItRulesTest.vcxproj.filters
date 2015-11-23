@@ -33,15 +33,15 @@
     <ClCompile Include="TypeFunctionTest.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Fixtures.cpp">
+    <ClCompile Include="TestEnglish.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="TestEnglish.cpp">
+    <ClCompile Include="TemplateEngineFixtures.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Fixtures.h">
+    <ClInclude Include="TemplateEngineFixtures.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
