@@ -360,6 +360,12 @@ TemplateEngine* TemplateEngine::add(std::string name, Function* function)
 	return this;
 }
 
+TemplateEngine* TemplateEngine::add(std::string name, Formatter* formatter)
+{
+	this->formatter_store->add(name, formatter);
+	return this;
+}
+
 bool TemplateEngine::execute(Trigger* trigger, Expression* expression)
 {
 	auto result = true;

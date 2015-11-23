@@ -93,6 +93,8 @@ public:
 
 	TemplateEngine* add(std::string name, Function* function);
 
+	TemplateEngine* add(std::string name, Formatter* formatter);
+
 	std::string render(AbstractFrame* frame);
 
 	TemplateEngine* use(std::string pathname);

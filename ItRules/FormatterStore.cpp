@@ -48,6 +48,12 @@ bool FormatterStore::exists(std::string name)
 	return map.find(name) != map.end();
 }
 
+void FormatterStore::add(std::string name, Formatter* formatter)
+{
+	boost::to_lower(name);
+	map.insert(std::pair<std::string, Formatter*>(name, formatter));
+}
+
 Formatter* FormatterStore::unknown_formatter()
 {
 	class unknown_formatter: public Formatter

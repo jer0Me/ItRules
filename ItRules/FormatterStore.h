@@ -23,5 +23,6 @@ public:
 	~FormatterStore();
 	Formatter* get(std::string name);
 	bool exists(std::string name);
+	void add(std::string name, Formatter* formatter);
 
 };
