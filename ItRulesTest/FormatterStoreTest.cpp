@@ -27,6 +27,12 @@ TEST(FormatterStoreTest, should_render_in_lowercase_first_letter)
 	ASSERT_EQ("hELLO WORLD", boost::get<std::string>(formatter_store->get("FirstLowerCase")->format("HELLO WORLD")));
 }
 
+TEST(FormatterStoreTest, should_render_in_capitalize)
+{
+	auto formatter_store = new FormatterStore();
+	ASSERT_EQ("Hello world", boost::get<std::string>(formatter_store->get("Capitalize")->format("Hello World")));
+}
+
 TEST(FormatterStoreTest, should_render_in_camelcase)
 {
 	auto formatter_store = new FormatterStore();
