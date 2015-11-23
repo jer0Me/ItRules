@@ -35,17 +35,12 @@ Formatter* DateFormatter::short_date()
 	class short_date : public Formatter
 	{
 		ItRules::type format(ItRules::type value) override {
-			std::string result = "";
-			if (is_date(value))
-			{
-				boost::gregorian::date_facet* facet(new boost::gregorian::date_facet("%d/%m/%Y"));
-				std::stringstream stream;
-				stream.imbue(std::locale(std::cout.getloc(), facet));
-				stream << boost::get<boost::gregorian::date>(value);
-				result = stream.str();
-			}
-			return result;
-			
+			if (!is_date(value)) return value;
+			auto facet(new boost::gregorian::date_facet("%d/%m/%Y"));
+			std::stringstream stream;
+			stream.imbue(std::locale(std::cout.getloc(), facet));
+			stream << boost::get<boost::gregorian::date>(value);
+			return stream.str();
 		}
 	};
 	return new short_date();

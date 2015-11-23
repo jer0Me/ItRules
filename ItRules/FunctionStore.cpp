@@ -4,6 +4,7 @@
 #include "SlotFunction.h"
 #include <algorithm>
 #include "TriggerFunction.h"
+#include "ValueFunction.h"
 
 
 FunctionStore::FunctionStore()
@@ -11,6 +12,7 @@ FunctionStore::FunctionStore()
 	map.insert(std::pair<std::string, Function*>("type", new TypeFunction()));
 	map.insert(std::pair<std::string, Function*>("slot", new SlotFunction()));
 	map.insert(std::pair<std::string, Function*>("trigger", new TriggerFunction()));
+	map.insert(std::pair<std::string, Function*>("value", new ValueFunction()));
 }
 
 FunctionStore::~FunctionStore()
@@ -35,7 +37,8 @@ bool FunctionStore::exists(std::string function)
 
 Function* FunctionStore::create_function(Condition* condition)
 {
-	auto* function = map.at(condition->get_name());
+
+	auto* function = map.at(boost::to_lower_copy(condition->get_name()));
 	return condition->isNegated() ? negatedFunction(function) : function;
 
 }
@@ -47,7 +50,16 @@ Function* FunctionStore::unknown_function(Condition* condition) const
 
 Function* FunctionStore::negatedFunction(Function* function)
 {
-	return new Function();
+	class negated : public Function
+	{
+		Function* function;
+	public:
+		negated(Function* function) : function(function){}
+		bool match(Trigger* trigger, std::string parameter) override {
+			return !function->match(trigger, parameter);
+		}
+	};
+	return new negated(function);
 }
 
 void FunctionStore::add(std::string name, Function* function)

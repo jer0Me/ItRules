@@ -16,4 +16,6 @@ public:
 	virtual bool is_primitive();
 
 	virtual std::list<AbstractFrame*> get_frames(std::string slot);
+
+	virtual std::string to_string();
 };

@@ -26,6 +26,8 @@
     <ClInclude Include="Condition.h" />
     <ClInclude Include="DateFormatter.h" />
     <ClInclude Include="DelegateMark.h" />
+    <ClInclude Include="EnglishPluralInflector.h" />
+    <ClInclude Include="ReplacesMap.h" />
     <ClInclude Include="EnglishSpelling.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Formatter.h" />
@@ -37,6 +39,9 @@
     <ClInclude Include="NonFormattingMark.h" />
     <ClInclude Include="NumberFormatter.h" />
     <ClInclude Include="NumberSpellingFormatter.h" />
+    <ClInclude Include="PluralFormatter.h" />
+    <ClInclude Include="PluralInflector.h" />
+    <ClInclude Include="ReplaceString.h" />
     <ClInclude Include="SlotFunction.h" />
     <ClInclude Include="SlotMap.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
@@ -53,6 +58,7 @@
     <ClInclude Include="TriggerFunction.h" />
     <ClInclude Include="TypeFunction.h" />
     <ClInclude Include="TypeSet.h" />
+    <ClInclude Include="ValueFunction.h" />
     <ClInclude Include="WordSpelling.h" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +69,8 @@
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="DateFormatter.cpp" />
     <ClCompile Include="DelegateMark.cpp" />
+    <ClCompile Include="EnglishPluralInflector.cpp" />
+    <ClCompile Include="ReplacesMap.cpp" />
     <ClCompile Include="EnglishSpelling.cpp" />
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Formatter.cpp" />
@@ -73,6 +81,9 @@
     <ClCompile Include="NonFormattingMark.cpp" />
     <ClCompile Include="NumberFormatter.cpp" />
     <ClCompile Include="NumberSpellingFormatter.cpp" />
+    <ClCompile Include="PluralFormatter.cpp" />
+    <ClCompile Include="PluralInflector.cpp" />
+    <ClCompile Include="ReplaceString.cpp" />
     <ClCompile Include="SlotFunction.cpp" />
     <ClCompile Include="SlotMap.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
@@ -89,6 +100,7 @@
     <ClCompile Include="TriggerFunction.cpp" />
     <ClCompile Include="TypeFunction.cpp" />
     <ClCompile Include="TypeSet.cpp" />
+    <ClCompile Include="ValueFunction.cpp" />
     <ClCompile Include="WordSpelling.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include "DateFormatter.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/variant/get.hpp>
+#include "PluralFormatter.h"
 
 FormatterStore::FormatterStore()
 {
@@ -12,6 +13,7 @@ FormatterStore::FormatterStore()
 	this->map.insert(string_formatter->get().begin(), string_formatter->get().end());
 	this->map.insert(date_formatter->get().begin(), date_formatter->get().end());
 	this->map.insert(number_formatter->get().begin(), number_formatter->get().end());
+	this->map.insert(std::pair<std::string, Formatter*>("plural", new PluralFormatter()));
 }
 
 FormatterStore::~FormatterStore()
@@ -19,6 +21,7 @@ FormatterStore::~FormatterStore()
 	delete string_formatter;
 	delete date_formatter;
 	delete number_formatter;
+	delete map.at("plural");
 }
 
 

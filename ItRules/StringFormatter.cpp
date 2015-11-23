@@ -138,6 +138,7 @@ Formatter* StringFormatter::capitalize()
 		ItRules::type format(ItRules::type value) override {
 			if (!is_string(value)) return value;
 			auto text = boost::get<std::string>(value);
+			boost::to_lower(text);
 			transform(text.begin(), text.begin()+1, text.begin(), ::toupper);
 			return text;
 		}

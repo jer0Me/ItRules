@@ -55,6 +55,12 @@
     <Filter Include="Archivos de encabezado\engine\formatters\spellings">
       <UniqueIdentifier>{d021d02d-a969-47f2-81f1-9ce41c6e290c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\engine\formatters\inflectors">
+      <UniqueIdentifier>{29fc47d2-2058-431e-8e52-ea13e2460ed7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine\formatters\inflectors">
+      <UniqueIdentifier>{6ebb8050-d7c3-4f82-a107-37212036bfdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TemplateEngine.h">
@@ -156,10 +162,28 @@
     <ClInclude Include="WordSpelling.h">
       <Filter>Archivos de encabezado\engine\formatters\spellings</Filter>
     </ClInclude>
+    <ClInclude Include="ValueFunction.h">
+      <Filter>Archivos de encabezado\engine\functions</Filter>
+    </ClInclude>
     <ClInclude Include="EnglishSpelling.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
     </ClInclude>
     <ClInclude Include="NumberSpellingFormatter.h">
+      <Filter>Archivos de encabezado\engine\formatters\spellings</Filter>
+    </ClInclude>
+    <ClInclude Include="PluralFormatter.h">
+      <Filter>Archivos de encabezado\engine\formatters</Filter>
+    </ClInclude>
+    <ClInclude Include="PluralInflector.h">
+      <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
+    </ClInclude>
+    <ClInclude Include="EnglishPluralInflector.h">
+      <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ReplaceString.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ReplacesMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -254,9 +278,6 @@
     <ClCompile Include="TriggerFunction.cpp">
       <Filter>Archivos de código fuente\engine\functions</Filter>
     </ClCompile>
-    <ClCompile Include="NumberFormatter.cpp">
-      <Filter>Archivos de código fuente\engine\formatters</Filter>
-    </ClCompile>
     <ClCompile Include="WordSpelling.cpp">
       <Filter>Archivos de código fuente\engine\formatters\spellings</Filter>
     </ClCompile>
@@ -265,6 +286,27 @@
     </ClCompile>
     <ClCompile Include="NumberSpellingFormatter.cpp">
       <Filter>Archivos de código fuente\engine\formatters\spellings</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueFunction.cpp">
+      <Filter>Archivos de código fuente\engine\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="PluralFormatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="PluralInflector.cpp">
+      <Filter>Archivos de código fuente\engine\formatters\inflectors</Filter>
+    </ClCompile>
+    <ClCompile Include="EnglishPluralInflector.cpp">
+      <Filter>Archivos de código fuente\engine\formatters\inflectors</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberFormatter.cpp">
+      <Filter>Archivos de código fuente\engine\formatters</Filter>
+    </ClCompile>
+    <ClCompile Include="ReplaceString.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="ReplacesMap.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -22,3 +22,7 @@ std::list<AbstractFrame*> AbstractFrame::get_frames(std::string slot)
 	return emptyList;
 }
 
+std::string AbstractFrame::to_string()
+{
+	return "";
+}
