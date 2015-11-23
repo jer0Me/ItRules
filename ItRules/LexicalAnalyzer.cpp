@@ -1,7 +1,6 @@
 ﻿#include "LexicalAnalyzer.h"
-#include "LexicalTokenizer.h"
+#include "ItRulesGrammar.h"
 #include <boost/spirit/include/qi.hpp>
-#include "Mark.h"
 #include "Expression.h"
 
 LexicalAnalyzer::LexicalAnalyzer() {}
@@ -10,25 +9,25 @@ LexicalAnalyzer::LexicalAnalyzer() {}
 std::list<Rule*>LexicalAnalyzer::analyze(std::string input)
 {
 	namespace qi = boost::spirit::qi;
-	LexicalTokenizer lexicalTokenizer;
+	ItRulesGrammar grammar;
 	std::list<Rule*> rules;
 	std::string::const_iterator iter = input.begin();
 	std::string::const_iterator end = input.end();
 
-	qi::phrase_parse(iter, end, lexicalTokenizer, qi::ascii::blank, rules);
-	setRuleTokenPrevious(rules);
+	phrase_parse(iter, end, grammar, qi::ascii::blank, rules);
+	set_rule_token_previous(rules);
 	return rules;
 }
 
-void LexicalAnalyzer::setRuleTokenPrevious(std::list<Rule*>& rules)
+void LexicalAnalyzer::set_rule_token_previous(std::list<Rule*>& rules)
 {
 	BOOST_FOREACH(Rule* rule, rules)
 	{
-		setTokenPrevious(rule->get_tokens());
+		set_token_previous(rule->get_tokens());
 	}
 }
 
-void LexicalAnalyzer::setTokenPrevious(std::list<Token*>& tokens)
+void LexicalAnalyzer::set_token_previous(std::list<Token*>& tokens)
 {
 	auto iterator = tokens.begin();
 	Token* previous = nullptr;
@@ -41,13 +40,13 @@ void LexicalAnalyzer::setTokenPrevious(std::list<Token*>& tokens)
 		previous = current;
 		if (is_expression(current)) {
 			auto expression = dynamic_cast<Expression*>(current);
-			setTokenPrevious(expression->get_tokens());
+			set_token_previous(expression->get_tokens());
 		}
 		++iterator;
 	}
 }
 
-bool LexicalAnalyzer::is_expression(Token* token)
+bool LexicalAnalyzer::is_expression(Token* token) const
 {
 	try
 	{

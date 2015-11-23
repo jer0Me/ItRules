@@ -4,9 +4,9 @@
 
 class LexicalAnalyzer
 {
-	void setRuleTokenPrevious(std::list<Rule*>& rules);
-	void setTokenPrevious(std::list<Token*>& tokens);
-	bool LexicalAnalyzer::is_expression(Token* token);
+	void set_rule_token_previous(std::list<Rule*>& rules);
+	void set_token_previous(std::list<Token*>& tokens);
+	bool LexicalAnalyzer::is_expression(Token* token) const;
 
 public:
 	LexicalAnalyzer();

@@ -27,6 +27,7 @@
     <ClInclude Include="DateFormatter.h" />
     <ClInclude Include="DelegateMark.h" />
     <ClInclude Include="EnglishPluralInflector.h" />
+    <ClInclude Include="ItrRulesReader.h" />
     <ClInclude Include="ReplacesMap.h" />
     <ClInclude Include="EnglishSpelling.h" />
     <ClInclude Include="Expression.h" />
@@ -45,7 +46,7 @@
     <ClInclude Include="SlotFunction.h" />
     <ClInclude Include="SlotMap.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
-    <ClInclude Include="LexicalTokenizer.h" />
+    <ClInclude Include="ItRulesGrammar.h" />
     <ClInclude Include="Literal.h" />
     <ClInclude Include="Mark.h" />
     <ClInclude Include="PrimitiveFrame.h" />
@@ -70,6 +71,7 @@
     <ClCompile Include="DateFormatter.cpp" />
     <ClCompile Include="DelegateMark.cpp" />
     <ClCompile Include="EnglishPluralInflector.cpp" />
+    <ClCompile Include="ItrRulesReader.cpp" />
     <ClCompile Include="ReplacesMap.cpp" />
     <ClCompile Include="EnglishSpelling.cpp" />
     <ClCompile Include="Expression.cpp" />
@@ -87,7 +89,7 @@
     <ClCompile Include="SlotFunction.cpp" />
     <ClCompile Include="SlotMap.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
-    <ClCompile Include="LexicalTokenizer.cpp" />
+    <ClCompile Include="ItRulesGrammar.cpp" />
     <ClCompile Include="Literal.cpp" />
     <ClCompile Include="Mark.cpp" />
     <ClCompile Include="PrimitiveFrame.cpp" />

@@ -69,9 +69,6 @@
     <ClInclude Include="LexicalAnalyzer.h">
       <Filter>Archivos de encabezado\parser</Filter>
     </ClInclude>
-    <ClInclude Include="LexicalTokenizer.h">
-      <Filter>Archivos de encabezado\parser</Filter>
-    </ClInclude>
     <ClInclude Include="RuleList.h">
       <Filter>Archivos de encabezado\parser</Filter>
     </ClInclude>
@@ -186,15 +183,18 @@
     <ClInclude Include="ReplaceString.h">
       <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
     </ClInclude>
+    <ClInclude Include="ItrRulesReader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ItRulesGrammar.h">
+      <Filter>Archivos de encabezado\parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TemplateEngine.cpp">
       <Filter>Archivos de código fuente\engine</Filter>
     </ClCompile>
     <ClCompile Include="LexicalAnalyzer.cpp">
-      <Filter>Archivos de código fuente\parser</Filter>
-    </ClCompile>
-    <ClCompile Include="LexicalTokenizer.cpp">
       <Filter>Archivos de código fuente\parser</Filter>
     </ClCompile>
     <ClCompile Include="RuleList.cpp">
@@ -307,6 +307,12 @@
     </ClCompile>
     <ClCompile Include="ReplaceString.cpp">
       <Filter>Archivos de código fuente\engine\formatters\inflectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ItrRulesReader.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="ItRulesGrammar.cpp">
+      <Filter>Archivos de código fuente\parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
