@@ -98,6 +98,4 @@ public:
 
 	TemplateEngine* use(std::string pathname);
 
-	TemplateEngine* use(std::ifstream& source);
-
 };

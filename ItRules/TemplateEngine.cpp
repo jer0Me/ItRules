@@ -5,9 +5,9 @@
 #include "PrimitiveFrame.h"
 #include <boost/variant/get.hpp>
 #include <boost/algorithm/string.hpp>
-#include <fstream>
 #include <boost/foreach.hpp>
 #include <sstream>
+#include "ItrRulesReader.h"
 
 TemplateEngine::TemplateEngine()
 {
@@ -55,31 +55,8 @@ void TemplateEngine::add_slot_rule()
 
 TemplateEngine* TemplateEngine::use(std::string pathname)
 {
-	std::ifstream source(pathname);
-	use(source);
-	source.close();
-	return this;
-}
-
-
-TemplateEngine* TemplateEngine::use(std::ifstream& source)
-{
-	std::vector<std::string> v;
-
-	std::string line;
-	std::string rules;
-
-	while (std::getline(source, line))
-	{
-		std::istringstream is(line);
-		std::string s;
-		std::getline(is, s);
-		s.find("\t");
-		rules += s;
-	}
-
-	generate_rules(rules);
-	
+	auto reader = new ItrRulesReader();
+	add(reader->read(pathname));
 	return this;
 }
 
