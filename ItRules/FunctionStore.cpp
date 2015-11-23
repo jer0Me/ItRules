@@ -64,7 +64,7 @@ Function* FunctionStore::negatedFunction(Function* function)
 
 void FunctionStore::add(std::string name, Function* function)
 {
-	map.insert(std::pair<std::string, Function*>(name, function));
+	map.insert(std::pair<std::string, Function*>(boost::to_lower_copy(name), function));
 }
 
 
