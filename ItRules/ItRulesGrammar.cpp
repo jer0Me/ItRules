@@ -30,33 +30,7 @@ ItRulesGrammar::ItRulesGrammar() : base_type(start)
 	set_condition_grammar();
 	set_tokens_grammar();
 	set_rules_grammar();
-	BOOST_SPIRIT_DEBUG_NODES(
-		(condition_name)
-		(condition_parameter)
-		(conditions)
-		(escaped_character)
-		(expression_literal_text)
-		(expression)
-		(mark_with_dots)
-		(mark_list)
-		(mark_name)
-		(separator)
-		(mark)
-		(text)
-		(mark_options)
-		(literal)
-		(expression_literal)
-		(tab)
-		(tokens)
-		(expression_tokens)
-		(rule)
-		(start)
-		(char_admitted)
-		(condition)
-		(string_separator)
-		)
 }
-
 
 void ItRulesGrammar::set_condition_grammar()
 {	
