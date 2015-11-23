@@ -2,6 +2,8 @@
 #include <Rule.h>
 #include <Frame.h>
 
+class Function;
+
 class TemplateEngineFixtures
 {
 	
