@@ -2,7 +2,6 @@
 #include "StringFormatter.h"
 #include "DateFormatter.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/variant/get.hpp>
 #include "PluralFormatter.h"
 
 FormatterStore::FormatterStore()
@@ -37,21 +36,17 @@ Formatter* FormatterStore::formatter(std::string name)
 
 Formatter* FormatterStore::create_formatter(std::string name)
 {
-	boost::to_lower(name);
-	auto* formatter = this->map.at(name);
-	return formatter;
+	return this->map.at(boost::to_lower_copy(name));
 }
 
 bool FormatterStore::exists(std::string name)
 {
-	boost::to_lower(name);
-	return map.find(name) != map.end();
+	return map.find(boost::to_lower_copy(name)) != map.end();
 }
 
 void FormatterStore::add(std::string name, Formatter* formatter)
 {
-	boost::to_lower(name);
-	map.insert(std::pair<std::string, Formatter*>(name, formatter));
+	map.insert(std::pair<std::string, Formatter*>(boost::to_lower_copy(name), formatter));
 }
 
 Formatter* FormatterStore::unknown_formatter()
