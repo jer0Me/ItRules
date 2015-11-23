@@ -102,6 +102,33 @@ TEST(TemplateEngine, should_render_person_chaining_two_formats)
 	ASSERT_EQ("PauGasols was born in Spain on 06/07/1980", template_engine->render(fixtures.person()));
 }
 
+TEST(TemplateEngine, should_render_person_defining_a_rule_with_a_custom_formatter)
+{
+	auto template_engine = new TemplateEngine();
+	Fixtures fixtures;
+	template_engine->add({ fixtures.person_rule_with_custom_format() });
+	template_engine->add("Custom", fixtures.custom_formatter());
+	ASSERT_EQ("9 was born in 5 on 06/07/1980", template_engine->render(fixtures.person()));
+}
+
+TEST(TemplateEngine, should_render_person_defining_rule_with_a_custom_condition_function)
+{
+	auto template_engine = new TemplateEngine();
+	Fixtures fixtures;
+	template_engine->add({ fixtures.person_rule_with_custom_condition() });
+	template_engine->add("Custom", fixtures.custom_condition_function());
+	ASSERT_EQ("Pau Gasol was born in Spain on 06/07/1980", template_engine->render(fixtures.person()));
+}
+
+TEST(TemplateEngine, should_render_person_excluding_a_field)
+{
+	auto template_engine = new TemplateEngine();
+	Fixtures fixtures;
+	template_engine->add({ fixtures.person_rule_with_custom_condition() });
+	template_engine->add("Custom", fixtures.custom_condition_function());
+	ASSERT_EQ("Pau Gasol was born in Spain on 06/07/1980", template_engine->render(fixtures.person()));
+}
+
 
 
 

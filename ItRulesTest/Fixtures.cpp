@@ -4,6 +4,8 @@
 #include <TemplateEngine.h>
 #include <Frame.h>
 #include "Fixtures.h"
+#include <boost/variant/get.hpp>
+#include <PrimitiveFrame.h>
 
 
 Frame* Fixtures::person()
@@ -118,7 +120,7 @@ Rule* Fixtures::person_rule_with_custom_format() const
 {
 	auto rule = new Rule();
 	rule->add(new Condition("Type", "Person"))
-		->add({ new Mark("Name"), new Literal(" was born in "), new Mark("Country"), new Literal(" on "), new Mark("Birthday", {"ShortDate"}) });
+		->add({ new Mark("Name", {"Custom"}), new Literal(" was born in "), new Mark("Country", {"Custom"}), new Literal(" on "), new Mark("Birthday", {"ShortDate"}) });
 	return rule;
 }
 
@@ -160,7 +162,35 @@ Rule* Fixtures::person_trigger_format_condition_rule() const
 	return rule;
 }
 
+Formatter* Fixtures::custom_formatter()
+{
+	class custom_formatter : public Formatter
+	{
+		ItRules::type format(ItRules::type value) override {
+			if (!is_string(value)) return value;
+			return std::to_string(boost::get<std::string>(value).length());
+		}
+	};
+	return new custom_formatter;
+}
 
+Function* Fixtures::custom_condition_function()
+{
+	class custom_condition_function : public Function
+	{
+		bool match(Trigger* trigger, std::string parameter) override {
+			return trigger->get_frame()->is("Person") && name(trigger).find(parameter) != std::string::npos;
+		}
+
+		std::string name(Trigger* trigger)
+		{
+			PrimitiveFrame* primitive_frame = 
+				dynamic_cast<PrimitiveFrame*>(*trigger->get_frame()->get_frames("name").begin());
+			return boost::get<std::string>(primitive_frame->get_value());
+		}
+	};
+	return new custom_condition_function();
+}
 
 
 

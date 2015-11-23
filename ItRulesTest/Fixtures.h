@@ -24,4 +24,6 @@ public:
 	Rule* person_value_rule() const;
 	Rule* person_trigger_condition_rule() const;
 	Rule* person_trigger_format_condition_rule() const;
+	Formatter* custom_formatter();
+	Function* custom_condition_function();
 };
