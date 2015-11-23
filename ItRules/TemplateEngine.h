@@ -10,8 +10,6 @@
 #include "Expression.h"
 #include "LexicalAnalyzer.h"
 
-
-
 class TemplateEngine
 {
 	std::list<Rule*> rules;
@@ -20,15 +18,16 @@ class TemplateEngine
 	FormatterStore* formatter_store;
 	LexicalAnalyzer* lexical_analyzer;
 
-	void initBuffer();
 
 	void delete_buffer();
-	
+
 	void delete_ruleset();
 
-	void add_slot_rule();
+	void initBuffer();
 
 	void pushBuffer(std::string indentation);
+
+	void add_slot_rule();
 
 	bool execute(Trigger* trigger);
 
@@ -40,9 +39,9 @@ class TemplateEngine
 
 	bool match(Rule* rule, Trigger* trigger);
 
-	bool conditionMatchTrigger(Trigger* trigger, Condition* condition);
+	bool conditionMatchTrigger(Trigger* trigger, Condition* condition) const;
 
-	bool is_abstract_mark(Token* token);
+	bool is_abstract_mark(Token* token) const;
 
 	bool execute(Trigger* trigger, AbstractMark* mark);
 
@@ -68,17 +67,17 @@ class TemplateEngine
 
 	bool is_primitive_frame(ItRules::type value);
 
-	bool is_abstract_frame(ItRules::type value);
+	bool is_abstract_frame(ItRules::type value) const;
 
 	bool pop_buffer();
 
 	bool execute(Trigger* trigger, Expression* expression);
 
-	bool is_constant(Expression* expression);
+	bool is_constant(Expression* expression) const;
 
 	bool is_expression(Token* token);
 
-	std::string document_of(Buffer* buffer);
+	std::string document_of(Buffer* buffer) const;
 
 	AbstractMark* compose_mark(Trigger* trigger, AbstractMark* mark) const;
 
@@ -100,6 +99,5 @@ public:
 	TemplateEngine* use(std::string pathname);
 
 	TemplateEngine* use(std::ifstream& source);
-
 
 };

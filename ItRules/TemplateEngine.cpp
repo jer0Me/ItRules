@@ -128,7 +128,6 @@ void TemplateEngine::pushBuffer(std::string indentation)
 bool TemplateEngine::execute(Trigger* trigger)
 {
 	auto rule = ruleFor(trigger);
-
 	return rule != nullptr && execute(trigger, rule);
 }
 
@@ -183,7 +182,6 @@ bool TemplateEngine::render_frames(std::list<AbstractFrame*> frames, AbstractMar
 		pop_buffer();
 		delete non_formatting_mark;
 	}
-
 	return rendered;
 }
 
@@ -274,23 +272,21 @@ void TemplateEngine::write_separator(AbstractMark* mark)
 
 void TemplateEngine::write(ItRules::type text)
 {
-	auto* buffer = this->buffers.top();
+	auto buffer = this->buffers.top();
 	buffer->write(text);
 }
 
 bool TemplateEngine::render_primitive_frame(AbstractFrame* frame, AbstractMark* mark)
 {
-	std::string mark_name = mark->get_name();
-	boost::to_lower(mark_name);
-	if (mark_name.compare("value") != 0) return false;
+	if (boost::to_lower_copy(mark->get_name()).compare("value") != 0) return false;
 	write(format(frame, mark));
-	Buffer* buffer = this->buffers.top();
+	auto buffer = this->buffers.top();
 	buffer->used();
 	delete mark;
 	return true;
 }
 
-bool TemplateEngine::is_abstract_mark(Token* token)
+bool TemplateEngine::is_abstract_mark(Token* token) const
 {
 	try
 	{
@@ -322,7 +318,7 @@ bool TemplateEngine::match(Rule* rule, Trigger* trigger)
 	return true;
 }
 
-bool TemplateEngine::conditionMatchTrigger(Trigger* trigger, Condition* condition)
+bool TemplateEngine::conditionMatchTrigger(Trigger* trigger, Condition* condition) const
 {
 	return function_store->get(condition)->match(trigger, condition->getParameter());
 }
@@ -337,12 +333,12 @@ AbstractFrame* TemplateEngine::frame(ItRules::type value)
 	return primitive_frame;
 }
 
-std::string TemplateEngine::document_of(Buffer* buffer)
+std::string TemplateEngine::document_of(Buffer* buffer) const
 {
 	return buffer->get_content();
 }
 
-bool TemplateEngine::is_abstract_frame(ItRules::type value)
+bool TemplateEngine::is_abstract_frame(ItRules::type value) const
 {
 	try
 	{
@@ -386,7 +382,7 @@ bool TemplateEngine::execute(Trigger* trigger, Expression* expression)
 	return result;
 }
 
-bool TemplateEngine::is_constant(Expression * expression)
+bool TemplateEngine::is_constant(Expression * expression) const
 {
 	BOOST_FOREACH(Token* token, expression->get_tokens())
 	{
