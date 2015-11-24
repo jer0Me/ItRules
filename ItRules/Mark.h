@@ -12,8 +12,8 @@ class Mark : public AbstractMark
 	std::string options_text();
 	std::string indent_of(Token* token);
 	std::string text_of(Token* token);
-	bool is_literal(Token* token);
-	std::string extract_indent(std::string text);
+	bool is_literal(Token* token) const;
+	std::string extract_indent(std::string text) const;
 
 public:
 	Mark(std::string name);

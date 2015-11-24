@@ -1,6 +1,6 @@
 ﻿#include <boost/variant/variant.hpp>
-#include "AbstractFrame.h"
 #include <boost/date_time/gregorian/greg_date.hpp>
+#include "AbstractFrame.h"
 
 namespace ItRules
 {

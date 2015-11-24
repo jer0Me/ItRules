@@ -61,6 +61,12 @@
     <Filter Include="Archivos de encabezado\engine\formatters\inflectors">
       <UniqueIdentifier>{6ebb8050-d7c3-4f82-a107-37212036bfdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\reader">
+      <UniqueIdentifier>{069ad78e-30a0-47e8-b3e3-14664732d9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\engine\reader">
+      <UniqueIdentifier>{c8de517e-add1-42e7-a293-80945ba63725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TemplateEngine.h">
@@ -183,11 +189,11 @@
     <ClInclude Include="ReplaceString.h">
       <Filter>Archivos de encabezado\engine\formatters\inflectors</Filter>
     </ClInclude>
-    <ClInclude Include="ItrRulesReader.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="ItRulesGrammar.h">
       <Filter>Archivos de encabezado\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="ItrRulesReader.h">
+      <Filter>Archivos de encabezado\engine\reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,11 +314,11 @@
     <ClCompile Include="ReplaceString.cpp">
       <Filter>Archivos de código fuente\engine\formatters\inflectors</Filter>
     </ClCompile>
-    <ClCompile Include="ItrRulesReader.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="ItRulesGrammar.cpp">
       <Filter>Archivos de código fuente\parser</Filter>
+    </ClCompile>
+    <ClCompile Include="ItrRulesReader.cpp">
+      <Filter>Archivos de código fuente\reader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

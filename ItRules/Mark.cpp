@@ -62,7 +62,7 @@ std::string Mark::text_of(Token* token)
 	return is_literal(token) ? extract_indent(dynamic_cast<Literal*> (token)->get_text()) : "";
 }
 
-bool Mark::is_literal(Token* token)
+bool Mark::is_literal(Token* token) const
 {
 	auto* literal = dynamic_cast<Literal*> (token);
 	return literal != nullptr;
@@ -73,11 +73,12 @@ std::string Mark::to_string()
 	return this->name;
 }
 
-std::string Mark::extract_indent(std::string text)
+std::string Mark::extract_indent(std::string text) const
 {
 	if(text.find("\n"))
 	{
-		std::string substring = text.substr(text.rfind("\n") + 1);
+		auto substring = text.substr(text.rfind("\n") + 1);
+		if (substring.empty()) return "";
 		boost::regex re("\\S");       
 		boost::sregex_token_iterator result(substring.begin(), substring.end(), re, -1);  
 		return *result;
