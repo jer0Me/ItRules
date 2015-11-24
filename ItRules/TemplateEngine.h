@@ -10,6 +10,8 @@
 #include "Expression.h"
 #include "LexicalAnalyzer.h"
 
+class ItRulesType;
+
 class TemplateEngine
 {
 	std::list<Rule*> rules;
@@ -57,17 +59,17 @@ class TemplateEngine
 
 	void write(ItRules::type text);
 
-	AbstractFrame* frame(ItRules::type value);
+	AbstractFrame* frame(ItRules::type  value);
 
-	ItRules::type format(ItRules::type value, Formatter* formatter);
+	ItRules::type format(ItRules::type  value, Formatter* formatter);
 
-	ItRules::type format(ItRules::type value, AbstractMark* mark);
+	ItRules::type format(ItRules::type  value, AbstractMark* mark);
 
-	bool trigger(ItRules::type value, AbstractMark* mark);
+	bool trigger(ItRules::type  value, AbstractMark* mark);
 
-	bool is_primitive_frame(ItRules::type value);
+	bool is_primitive_frame(ItRules::type  value);
 
-	bool is_abstract_frame(ItRules::type value) const;
+	bool is_abstract_frame(ItRules::type  value) const;
 
 	bool pop_buffer();
 

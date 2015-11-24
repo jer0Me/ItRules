@@ -2,8 +2,6 @@
 #include <string>
 #include <list>
 
-
-
 class AbstractFrame
 {
 
